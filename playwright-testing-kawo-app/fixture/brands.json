@@ -1,0 +1,18 @@
+{
+    "brands":{
+        "name": "Brand Test",
+        "plan":{
+            "core": "Core",
+            "corePlus": "Core+"
+        },
+        "industry": {
+            "Automotive": "Automotive",
+            "Auto_Brand": "Auto Brand"
+        },
+        "get_brand_apiRequest_para":{
+            "get_brand_apiRequest_url": "api/v2/brand?slug=automation-test&status=active",
+            "get_brand_apiRequest_data":"{}",
+            "get_brand_except_result":"6613b052b59b1c1e72a35aa8"
+        }
+    }
+}

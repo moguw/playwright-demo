@@ -1,0 +1,21 @@
+{
+  "name": "playwright-testing-kawo-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "staging_somkeCase": "test_env=staging npx playwright test --grep @smoke --headless",
+    "staging_regresionCase": "test_env=staging npx playwright test --grep @regression",
+    "delta_somkeCase": "test_env=delta npx playwright test --grep @smoke",
+    "delta_regresionCase": "test_env=delta npx playwright test --grep @regression",
+    "debug": "test_env=staging npx playwright test --ui"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.42.1",
+    "@types/node": "^20.12.3",
+    "dotenv": "^16.4.5"
+  }
+}
