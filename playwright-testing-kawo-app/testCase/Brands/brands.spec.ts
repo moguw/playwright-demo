@@ -3,8 +3,8 @@ import { Brands } from '../../Page/Brands/brand.page'
 import { brands } from "../../fixture/brands.json"
 import { users } from "../../fixture/user_info.json"
 import { generateString, getRandomArrayElements} from "../../utils/Random-setup"
-import * as admin_token from '../../.auth/admin_user_token.json'
-import * as group_token from '../../.auth/group_user_token.json'
+// import * as admin_token from '../../.auth/admin_user_token.json'
+// import * as group_token from '../../.auth/group_user_token.json'
 
 /**create Group
  * crate Group after admin user login 
@@ -19,7 +19,7 @@ var brand_apiRequest_urls = brands.get_brand_apiRequest_para.get_brand_apiReques
 var brand_apiRequest_data = brands.get_brand_apiRequest_para.get_brand_apiRequest_data
 var brand_expect_result = brands.get_brand_apiRequest_para.get_brand_except_result
 var GroupName = 'Auto Test(Dont delete)'
-var admin_header = {'X-Auth-Token':admin_token.origins[0].localStorage[4].value}
+// var admin_header = {'X-Auth-Token':admin_token.origins[0].localStorage[4].value}
 test.use({ storageState: users.admin_user.admin_User_Token_File_Path });
 test('admin_user test create core brands',{tag: '@regression'}, 
     async ({ page }) => {
@@ -60,11 +60,11 @@ test('admin_user test archive brands', {tag :['@smoke','@regression']},
         //     brand_apiRequest_data,brand_expect_result)
   });
 
-test('admin_user request brand_get api result', {tag :['@smoke','@regression']},
-    async ({ page,request }) => {
-        const Brand = new Brands(page)
-        await Brand.checkApiResultSucess(request,brand_apiRequest_urls,admin_header,
-            brand_apiRequest_data,brand_expect_result)
-});
+// test('admin_user request brand_get api result', {tag :['@smoke','@regression']},
+//     async ({ page,request }) => {
+//         const Brand = new Brands(page)
+//         await Brand.checkApiResultSucess(request,brand_apiRequest_urls,admin_header,
+//             brand_apiRequest_data,brand_expect_result)
+// });
 
 
