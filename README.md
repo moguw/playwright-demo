@@ -72,19 +72,19 @@ Project tree:
 │   ├── envfile  （Storage of all env information）
 │   ├── fixtures （Storage of all test data）
 │   └── Page
-│       ├── Brand.page.ts  (element operater)
+│       ├── Brand.page.ts  ( element operater )
 │       ├── ...
 │   └── testcase
-│       ├── Brand.spec.ts (test)
+│       ├── Brand.spec.ts ( testcase )
 │       ├── ...
 │   └── utils
-│       ├── API-setup.ts （Includes custom commands such as login and logout operations and cookie setting）
-│       ├── ENV-setup.ts （Please check the description details in the file document）
-│       └── Random-setup.ts （Includes page elements and exact actions, such as clike and input events）
-├── playwright.config.ts （global set,such as url,report,browser..）
+│       ├── API-setup.ts （ requrest.get/post/.. api ）
+│       ├── ENV-setup.ts （ read different env information ）
+│       └── Random-setup.ts （ generate random string...）
+├── playwright.config.ts （ global set,such as url,report,browser.. ）
 ├── package.json
-├── test-result  (only failure result will screeshot)
-├── playwright-report  (Storage of all report information)
+├── test-result  ( only failure result will screeshot )
+├── playwright-report  ( Storage of all report information )
 ```
 
 ### **Prerequisites**
