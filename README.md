@@ -94,7 +94,7 @@ The only requirement for this project is to have Node.js version 14 installed on
 ```
 1. nodejs
 2. playwright
-3. dotenv
+3. dotenv (npm i -D dotenv)
 ```
 ### **Run Test**
 ```
