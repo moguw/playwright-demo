@@ -54,7 +54,7 @@ test('admin_user test archive brands', {tag :['@smoke','@regression']},
         // page is authenticated as admin
         const Brand = new Brands(page)
         await Brand.goToBrandsPage()
-        await Brand.archiveBrands(BrandName)
+        await Brand.archiveBrands()
         await Brand.checkBrandIsArchiveSucess()
         // await Brand.checkApiResultSucess(request,brand_apiRequest_urls,admin_header,
         //     brand_apiRequest_data,brand_expect_result)

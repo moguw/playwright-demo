@@ -20,6 +20,7 @@ const setting_element = 'a[data-tooltip="Settings"]'
 const archiveBrand_element = 'text=archive this brand'
 const archiveBrandName_element = 'input[data-view-id="archiveBrandInput"]'
 const archiveButton_element = 'text=Archive'
+const brand_name_element = '.kui-txt > small'
 
 
 export class Brands {
@@ -51,10 +52,11 @@ export class Brands {
         await this.page.getByRole('button',{ name: move_element }).last().click()
         await this.page.getByRole('button',{ name: move_element }).last().click()
     }
-    async archiveBrands(name) {     
+    async archiveBrands() {     
         await this.page.locator(setting_element).last().click()
+        const brand_name_value = await this.page.locator(brand_name_element).innerText()
         await this.page.locator(archiveBrand_element).click()
-        await this.page.locator(archiveBrandName_element).fill(name)
+        await this.page.locator(archiveBrandName_element).fill(brand_name_value)
         await this.page.locator(archiveButton_element).last().click()
     }
     async checkBrandIsCreateSucess(){
@@ -83,4 +85,4 @@ export class Brands {
     //   console.log("result:", rsp)
     //   await expect(rsp[0]["id"]).toBe(expect_data)
     // }
-  }
+  
