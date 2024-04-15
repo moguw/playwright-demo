@@ -1,13 +1,13 @@
 import { test,expect } from '@playwright/test'
 import { Groups } from '../../Page/Brands/group.page'
-import { users } from "../../fixture/user_info.json"
+// import { users } from "../../fixture/user_info.json"
 const createBrandButton_element = 'button[data-tooltip="Create Group"]'
 /**create Group
  * crate Group after admin user login 
  */
 
 
-test.use({ storageState: users.admin_user.admin_User_Token_File_Path });
+test.use({ storageState: process.env.admin_user_token_path });
 test('admin_user test create Group', {tag: '@regression'},
     async ({ page }) => {
       // page is authenticated as admin
@@ -22,7 +22,7 @@ test('admin_user test create Group', {tag: '@regression'},
  * crate Group after read only user login 
  */
 test.describe('group_user authenticate',() => {
-  test.use({ storageState: users.group_user.group_User_Token_File_Path });
+  test.use({ storageState: process.env.group_user_token_path });
 
   test('group_user test create Group',{tag :['@smoke','@regression']}, 
       async ({ page }) => {

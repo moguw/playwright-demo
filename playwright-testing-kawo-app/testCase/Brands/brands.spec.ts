@@ -1,7 +1,7 @@
 import { test,expect } from '@playwright/test'
 import { Brands } from '../../Page/Brands/brand.page'
 import { brands } from "../../fixture/brands.json"
-import { users } from "../../fixture/user_info.json"
+// import { users } from "../../fixture/user_info.json"
 import { generateString, getRandomArrayElements} from "../../utils/Random-setup"
 // import * as admin_token from '../../.auth/admin_user_token.json'
 // import * as group_token from '../../.auth/group_user_token.json'
@@ -20,7 +20,7 @@ var brand_apiRequest_data = brands.get_brand_apiRequest_para.get_brand_apiReques
 var brand_expect_result = brands.get_brand_apiRequest_para.get_brand_except_result
 var GroupName = 'Auto Test(Dont delete)'
 // var admin_header = {'X-Auth-Token':admin_token.origins[0].localStorage[4].value}
-test.use({ storageState: users.admin_user.admin_User_Token_File_Path });
+test.use({ storageState: process.env.admin_user_token_path });
 test('admin_user test create core brands',{tag: '@regression'}, 
     async ({ page }) => {
         // page is authenticated as admin
