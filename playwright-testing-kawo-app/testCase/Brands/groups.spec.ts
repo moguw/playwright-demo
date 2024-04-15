@@ -1,7 +1,5 @@
 import { test,expect } from '@playwright/test'
 import { Groups } from '../../Page/Brands/group.page'
-// import { users } from "../../fixture/user_info.json"
-const createBrandButton_element = 'button[data-tooltip="Create Group"]'
 /**create Group
  * crate Group after admin user login 
  */

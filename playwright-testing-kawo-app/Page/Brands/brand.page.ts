@@ -75,12 +75,12 @@ export class Brands {
     async checkBrandIsArchiveSucess(){
       await expect(this.page).toHaveURL(/.*archived/)
     }
+}
     // except_result、URL、request_data存储在./fixture/.json文件中
     // async checkApiResultSucess(request,urls,header,request_data,expect_result){
     //   const api = new API_Requests()
     //   const rsp = await api.API_Get(request,urls,header,request_data)
     //   await expect(rsp[0]["id"]).toContain(expect_result)
-    }
     // async checkApiResultSucess(request,urls,header,request_data,expect_data){
     //   const response = await request.get(urls, {
     //     headers: header,
