@@ -1,5 +1,5 @@
 import { test as setup, expect } from '@playwright/test';
-import { users } from '../fixture/user_info.json'
+// import { users } from '../fixture/user_info.json'
 
 const name_element = 'input[placeholder="Email"]'
 const pwd_element = 'input[type="Password"]'
@@ -8,8 +8,8 @@ const loginButton_elelment = "text=Log in"
 /** save admin_user authenticate */
 setup('authenticate as admin_user', async ({ page }) => {
   await page.goto('/login');
-  await page.fill(name_element,users.admin_user.name);
-  await page.fill(pwd_element, users.admin_user.pwd);
+  await page.fill(name_element,process.env.admin_user_name || '');
+  await page.fill(pwd_element, process.env.admin_user_pwd || '');
   await page.locator(loginButton_elelment).first().click();
   // Wait until the page receives the cookies.
   // Sometimes login flow sets cookies in the process of several redirects.
@@ -20,14 +20,15 @@ setup('authenticate as admin_user', async ({ page }) => {
 
   // End of authentication steps.
 
-  await page.context().storageState({ path: users.admin_user.admin_User_Token_File_Path });
+  // await page.context().storageState({ path: users.admin_user.admin_User_Token_File_Path });
+  await page.context().storageState({ path: process.env.admin_user_token_path });
 });
 
 /** save group_user authenticate */
 setup('authenticate as group_user', async ({ page }) => {
   await page.goto('/login');
-  await page.fill(name_element,users.group_user.name);
-  await page.fill(pwd_element, users.group_user.pwd);
+  await page.fill(name_element,process.env.group_user_name || '');
+  await page.fill(pwd_element, process.env.group_user_pwd || '');
   await page.locator(loginButton_elelment).first().click();
   // Wait until the page receives the cookies.
   // Sometimes login flow sets cookies in the process of several redirects.
@@ -38,5 +39,5 @@ setup('authenticate as group_user', async ({ page }) => {
 
   // End of authentication steps.
 
-  await page.context().storageState({ path: users.group_user.group_User_Token_File_Path });
+  await page.context().storageState({ path: process.env.group_user_token_path });
 });

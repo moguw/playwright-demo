@@ -20,7 +20,9 @@ const setting_element = 'a[data-tooltip="Settings"]'
 const archiveBrand_element = 'text=archive this brand'
 const archiveBrandName_element = 'input[data-view-id="archiveBrandInput"]'
 const archiveButton_element = 'text=Archive'
-const brand_name_element = '.kui-txt > small'
+const get_brand_name_element = '.kui-txt > small'
+const brand_name_element = 'input[placeholder="Brand name..."]'
+const save_button_element = 'text=SAVE'
 
 
 export class Brands {
@@ -54,7 +56,10 @@ export class Brands {
     }
     async archiveBrands() {     
         await this.page.locator(setting_element).last().click()
-        const brand_name_value = await this.page.locator(brand_name_element).innerText()
+        await this.page.locator(brand_name_element).fill('')
+        const brand_name_value = await this.page.locator(get_brand_name_element).innerText()
+        await this.page.locator(brand_name_element).fill(brand_name_value)
+        await this.page.locator(save_button_element).first().click()
         await this.page.locator(archiveBrand_element).click()
         await this.page.locator(archiveBrandName_element).fill(brand_name_value)
         await this.page.locator(archiveButton_element).last().click()
