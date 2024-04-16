@@ -15,6 +15,13 @@ test('admin_user test create Group', {tag: '@regression'},
       await Group.checkGroupElementIsExsit(1)
 });
 
+test('admin_user test delete Group', {tag: ['@smoke','@regression']},
+    async ({ page }) => {
+      // page is authenticated as admin
+      const Group = new Groups(page)
+      await Group.goToOverviewPage()
+      await Group.deleteGroup()
+});
 
 /**create Group
  * crate Group after read only user login 

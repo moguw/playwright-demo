@@ -8,6 +8,9 @@ import { Page,expect } from '@playwright/test';
 const createGroupButton_element = 'button.kui-button-base.kui-button'
 const Page_elelment = "text=automation test"
 const CreateGroupIcon_element = 'button[data-tooltip="Create Group"]'
+const groupIcon_element = 'div.kui-lst-item__action'
+const DeleteGroup_element = 'text=Delete Group'
+const groupName_element = 'span.kui-typ.kui-typ__body2.kui-lst-item__text'
 
 //   export default setup
 export class Groups {
@@ -22,23 +25,15 @@ export class Groups {
         await this.page.locator(createGroupButton_element).first().click();
         await this.page.locator(Page_elelment).first().click()
     }
-    async renameGroup() {     
-      // ...
+    async deleteGroup() {  
+        await this.page.locator(groupIcon_element).last().click()
+        await this.page.locator(DeleteGroup_element).click()
     }
-    async deleteGroup() {     
-    // ...
-    }
-    async checkGroupElementIsExsit(num){
-      if(num == 0){
-        let locator_element_num = this.page.locator(CreateGroupIcon_element).count();
-        locator_element_num.then(async (locator_element_num) =>{
-          await expect(locator_element_num).toBe(num)
-        });
-      }
-      
-      else{
-        await expect(this.page).toHaveURL(/.*overview/)
-      } 
+    async checkGroupElementIsExsit(except_num){
+      let locator_element_num = this.page.locator(CreateGroupIcon_element).count();
+      locator_element_num.then(async (locator_element_num) =>{
+        await expect(locator_element_num).toBe(except_num)
+      });
     }
   }
    
