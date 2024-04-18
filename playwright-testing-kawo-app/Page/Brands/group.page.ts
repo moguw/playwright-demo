@@ -3,7 +3,8 @@
  * groups delete
  * groups rename
 */
-
+// import { test,expect, Page } from '../../fixture/fixture'
+// import { Admin } from './brandSetting/Admin.page'
 import { Page,expect } from '@playwright/test';
 const createGroupButton_element = 'button.kui-button-base.kui-button'
 const Page_elelment = "text=automation test"
@@ -12,7 +13,6 @@ const groupIcon_element = 'ul.brand-groups-list > li.kui-lst-item > div.kui-lst-
 const DeleteGroup_element = 'text=Delete Group'
 const groupName_element = 'span.kui-typ.kui-typ__body2.kui-lst-item__text'
 
-//   export default setup
 export class Groups {
     page: Page;
     constructor(page: Page) {

@@ -1,6 +1,6 @@
 import { test,expect } from '@playwright/test'
 import { Brands } from '../../Page/Brands/brand.page'
-import { brands } from "../../fixture/brands.json"
+import { brands } from "../../testData/brands.json"
 import { generateString, getRandomArrayElements} from "../../utils/Random-setup"
 import { api_Requests } from '../../utils/API-setup'
 /**create Group

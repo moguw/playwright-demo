@@ -7,7 +7,7 @@
 */
 import { Page,expect} from '@playwright/test';
 import { api_Requests } from '../../utils/API-setup'
-import { brands } from "../../fixture/brands.json"
+import { brands } from "../../testData/brands.json"
 const CreateBrandButton_element = 'text=Create Brand'
 const BrandName_element = 'input[placeholder="Input Brand Name"]'
 const SearchBrandName_element = 'input[placeholder="Search brand name"]'
