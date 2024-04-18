@@ -4,7 +4,7 @@ import { Groups } from '../../Page/Brands/group.page'
  * crate Group after admin user login 
  */
 
-import { test,expect } from '../../fixture/fixture'
+import { test,expect } from '../../utils/Fixture-setup'
 
 test('test create Group', {tag: '@regression'},
     async ({ adminPage,userPage }) => {

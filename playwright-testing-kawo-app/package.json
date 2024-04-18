@@ -4,10 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "staging_somkeCase": "test_env=staging npx playwright test --grep @smoke",
-    "staging_regresionCase": "test_env=staging npx playwright test --grep @regression",
-    "delta_somkeCase": "test_env=delta npx playwright test --grep @smoke",
-    "delta_regresionCase": "test_env=delta npx playwright test --grep @regression",
+    "staging": "test_env=staging npx playwright test",
+    "delta": "test_env=delta npx playwright test",
     "debug": "test_env=staging npx playwright test --ui"
   },
   "keywords": [],
