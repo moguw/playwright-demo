@@ -1,20 +1,38 @@
 /**
  * 封装API请求
- */
-export class API_Requests {
-    async API_Get(request,urls,header,request_data){
-        const response = await request.get(urls, {
-          headers: header,
-          data: request_data
+ * playwright 支持请求api
+ * e.g. 
+ * await request.fetch('https://example.com/api/', {
+  method: 'post',
+  data: {
+    title: 'title',
+    author: 'author',
+  }
+});
+*/
+import { request } from '@playwright/test';
+export class api_Requests {
+    async getRequest(urls,datas){
+      const token = (await (await request.newContext()).storageState()).origins[0].localStorage[4].value
+      const headers = {
+        'X-Auth-Token': token
+      }
+      const response = await (await request.newContext()).get(urls, {
+          headers: headers,
+          data: datas
         });
         var rsp = JSON.parse(await response.text())
         console.log("result:", rsp)
         return rsp
     }
-    async API_Post(request,urls,header,request_data){
-        const response = await request.post(urls, {
-          headers: header,
-          data: request_data
+    async postRequest(urls,datas){
+      const token = (await (await request.newContext()).storageState()).origins[0].localStorage[4].value
+      const headers = {
+        'X-Auth-Token': token
+      }
+      const response = await (await request.newContext()).post(urls, {
+          headers: headers,
+          data: datas
         });
         var rsp = JSON.parse(await response.text())
         console.log("result:", rsp)
