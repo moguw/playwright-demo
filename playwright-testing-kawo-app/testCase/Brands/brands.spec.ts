@@ -4,7 +4,7 @@ import { brands } from "../../testData/brands.json"
 import { generateString, getRandomArrayElements} from "../../utils/Random-setup"
 import { api_Requests } from '../../utils/API-setup'
 /**create Group
- * crate Group after admin user login 
+ * crate Group after org owner login 
  */
 var BrandName = brands.name
 var Core = brands.plan.core
@@ -16,7 +16,7 @@ var brand_urls = brands.get_brand_apiRequest_para.get_brand_apiRequest_url
 var brand_apiRequest_data = brands.get_brand_apiRequest_para.get_brand_apiRequest_data
 var brand_expect_result = brands.get_brand_apiRequest_para.get_brand_except_result
 test.use({ storageState: process.env.admin_user_token_path });
-test('admin_user test create core brands',{tag: '@regression'}, 
+test('org owner test create core brands',{tag: '@regression'}, 
     async ({ page }) => {
         // page is authenticated as admin
         // var Plan =getRandomArrayElements(brands.plan,1)//随机取列表中的一个值
@@ -26,7 +26,7 @@ test('admin_user test create core brands',{tag: '@regression'},
         // await Brand.checkBrandIsCreateSucess()
 });
 
-test('admin_user test create core+ brands', {tag: '@regression'},
+test('org owner test create core+ brands', {tag: '@regression'},
     async ({ page }) => {
         // page is authenticated as admin
         const Brand = new Brands(page)
@@ -35,7 +35,7 @@ test('admin_user test create core+ brands', {tag: '@regression'},
         // await Brand.checkBrandIsCreateSucess()
   });
 
-test('admin_user test move brands',{tag :['@smoke','@regression']}, 
+test('org owner test move brands',{tag :['@smoke','@regression']}, 
     async ({ page }) => {
         // page is authenticated as admin
         const Brand = new Brands(page)

@@ -1,15 +1,32 @@
 import { test as base, type Page, type Locator } from '@playwright/test';
 
 
-class AdminPage {
-  // Page signed in as "admin".
+class OrgOwner {
+  // Page signed in as "org owner".
   page: Page;
   constructor(page: Page) {
     this.page = page;
   }
 }
-class UserPage {
-  // Page signed in as "user".
+
+class GroupOwner {
+  // Page signed in as "group owner".
+  page: Page;
+  constructor(page: Page) {
+    this.page = page;
+  }
+}
+
+class BrandOwner {
+  // Page signed in as "brand owner".
+  page: Page;
+  constructor(page: Page) {
+    this.page = page;
+  }
+}
+
+class Operator {
+  // Page signed in as "operator".
   page: Page;
   constructor(page: Page) {
     this.page = page;
@@ -18,22 +35,36 @@ class UserPage {
 
 // Declare the types of your fixtures.
 type MyFixtures = {
-  adminPage: AdminPage;
-  userPage: UserPage;
+  orgOwner: OrgOwner;
+  groupOwner: GroupOwner;
+  brandOwner: BrandOwner;
+  operator: Operator
 };
 
 export * from '@playwright/test';
 export const test = base.extend<MyFixtures>({
-  adminPage: async ({ browser }, use) => {
-    const context = await browser.newContext({ storageState: process.env.admin_user_token_path });
-    const adminPage = new AdminPage(await context.newPage());
-    await use(adminPage);
+  orgOwner: async ({ browser }, use) => {
+    const context = await browser.newContext({ storageState: process.env.org_owner_token_path });
+    const orgOwner = new OrgOwner(await context.newPage());
+    await use(orgOwner);
     await context.close();
   },
-  userPage: async ({ browser }, use) => {
-    const context = await browser.newContext({ storageState: process.env.group_user_token_path });
-    const userPage = new UserPage(await context.newPage());
-    await use(userPage);
+  groupOwner: async ({ browser }, use) => {
+    const context = await browser.newContext({ storageState: process.env.group_owner_token_path });
+    const groupOwner = new GroupOwner(await context.newPage());
+    await use(groupOwner);
+    await context.close();
+  },
+  brandOwner: async ({ browser }, use) => {
+    const context = await browser.newContext({ storageState: process.env.brand_owner_token_path });
+    const brandOwner = new BrandOwner(await context.newPage());
+    await use(brandOwner);
+    await context.close();
+  },
+  operator: async ({ browser }, use) => {
+    const context = await browser.newContext({ storageState: process.env.operator_token_path });
+    const operator = new Operator(await context.newPage());
+    await use(operator);
     await context.close();
   },
 });
