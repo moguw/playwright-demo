@@ -1,4 +1,4 @@
-const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+const characters ='abcdefghijklmnopqrstuvwxyz0123456789';
 /**随机生成string */
 export function generateString(length) {
     let result = '';
