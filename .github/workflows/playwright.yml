@@ -13,6 +13,7 @@ on:
         - staging-gamma
 jobs:
   test:
+    name: Run end-to-end tests
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
@@ -27,7 +28,12 @@ jobs:
     - name: Install dotenv 
       run: npm i -D dotenv
     - name: Run Playwright tests
-      run: cd /playwright-testing-kawo-app && npx playwright test
+      run: test_env=${{ inputs.environment }} 
+            org_owner_pwd=${{ secrets.org_owner_pwd }} 
+            group_owner_pwd=${{ secrets.group_owner_pwd }} 
+            brand_owner_pwd=${{ secrets.brand_owner_pwd }} 
+            operator_pwd=${{ secrets.operator_pwd }} 
+            npx playwright test
     - uses: actions/upload-artifact@v4
       if: always()
       with:
