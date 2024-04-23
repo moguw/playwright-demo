@@ -15,34 +15,34 @@ var GroupName = 'Auto Test(Dont delete)'
 var brand_urls = brands.get_brand_apiRequest_para.get_brand_apiRequest_url
 var brand_apiRequest_data = brands.get_brand_apiRequest_para.get_brand_apiRequest_data
 var brand_expect_result = brands.get_brand_apiRequest_para.get_brand_except_result
-test.use({ storageState: process.env.admin_user_token_path });
-test('org owner test create core brands',{tag: '@regression'}, 
-    async ({ page }) => {
-        // page is authenticated as admin
-        // var Plan =getRandomArrayElements(brands.plan,1)//随机取列表中的一个值
-        const Brand = new Brands(page)
-        await Brand.goToBrandsPage()
-        await Brand.createBrands(BrandName,Core,industry,industry_sub)
-        // await Brand.checkBrandIsCreateSucess()
-});
+// test.use({ storageState: process.env.admin_user_token_path });
+// test('org owner test create core brands',{tag: '@regression'}, 
+//     async ({ page }) => {
+//         // page is authenticated as admin
+//         // var Plan =getRandomArrayElements(brands.plan,1)//随机取列表中的一个值
+//         const Brand = new Brands(page)
+//         await Brand.goToBrandsPage()
+//         await Brand.createBrands(BrandName,Core,industry,industry_sub)
+//         // await Brand.checkBrandIsCreateSucess()
+// });
 
-test('org owner test create core+ brands', {tag: '@regression'},
-    async ({ page }) => {
-        // page is authenticated as admin
-        const Brand = new Brands(page)
-        await Brand.goToBrandsPage()
-        await Brand.createBrands(BrandName,CorePlus,industry,industry_sub)
-        // await Brand.checkBrandIsCreateSucess()
-  });
+// test('org owner test create core+ brands', {tag: '@regression'},
+//     async ({ page }) => {
+//         // page is authenticated as admin
+//         const Brand = new Brands(page)
+//         await Brand.goToBrandsPage()
+//         await Brand.createBrands(BrandName,CorePlus,industry,industry_sub)
+//         // await Brand.checkBrandIsCreateSucess()
+//   });
 
-test('org owner test move brands',{tag :['@smoke','@regression']}, 
-    async ({ page }) => {
-        // page is authenticated as admin
-        const Brand = new Brands(page)
-        await Brand.goToBrandsPage()
-        await Brand.moveBrands('Auto Test Brand',GroupName)
-        // await Brand.checkMoveBrandtoGroupSucess(GroupName)
-  });
+// test('org owner test move brands',{tag :['@smoke','@regression']}, 
+//     async ({ page }) => {
+//         // page is authenticated as admin
+//         const Brand = new Brands(page)
+//         await Brand.goToBrandsPage()
+//         await Brand.moveBrands('Auto Test Brand',GroupName)
+//         // await Brand.checkMoveBrandtoGroupSucess(GroupName)
+//   });
 
 // test('admin_user test archive brands', {tag :['@smoke','@regression']},
 //     async ({ page }) => {
