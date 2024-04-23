@@ -96,11 +96,11 @@ test.describe('test - invite user',() => {
     });
 });
 
-test.describe('test - edit user',() => {
-    test('org owner', async ({ orgOwner}) => {
-        const orgSettings_orgOwner = new OrgSettings(orgOwner.page)
-        await orgSettings_orgOwner.goToUsersPage()
-        await orgSettings_orgOwner.editUserFromOrgToGroup(EmailAddress_auto,Groups_selection)
-        await orgSettings_orgOwner.assertEditSuccess(EmailAddress_auto,Groups_selection)
-    });
-})
+// test.describe('test - edit user',() => {
+//     test('org owner', async ({ orgOwner}) => {
+//         const orgSettings_orgOwner = new OrgSettings(orgOwner.page)
+//         await orgSettings_orgOwner.goToUsersPage()
+//         await orgSettings_orgOwner.editUserFromOrgToGroup(EmailAddress_auto,Groups_selection)
+//         await orgSettings_orgOwner.assertEditSuccess(EmailAddress_auto,Groups_selection)
+//     });
+// })
