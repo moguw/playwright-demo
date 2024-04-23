@@ -44,7 +44,6 @@ export class Brands {
         await this.page.getByRole('listitem').getByRole("button",{name: industry_sub}).first().click()
         await this.page.locator(Create_button_element).first().click()
         await this.page.getByRole('button',{ name: 'Create' }).last().click()
-        await expect(this.page).toHaveURL(/.*general/)
     }
     async moveBrands(BrandName,GroupName) {
         await this.page.getByRole('button',{ name: moveBrand_element }).first().click()
@@ -54,8 +53,6 @@ export class Brands {
         await this.page.getByRole('button',{ name: GroupName }).first().click()
         await this.page.getByRole('button',{ name: move_element }).last().click()
         await this.page.getByRole('button',{ name: move_element }).last().click()
-        await this.page.waitForTimeout(1000)
-        await expect(this.page.locator(BrandList_element).nth(2)).toContainText(GroupName)
     }
     async archiveBrands() {     
         await this.page.locator(setting_element).last().click()
@@ -63,7 +60,6 @@ export class Brands {
         if(brand_name_value === 'AUTO TEST BRAND(DONT DELETE)'){
           console.log('this is a auto test brand,please do not delete this brand,thanks')
           await this.page.goto('/automation-test/overview/brands/group/archived')
-          await expect(this.page).toHaveURL(/.*archived/)
         }
         else{
           await this.page.locator(brand_name_element).fill('')
@@ -72,20 +68,19 @@ export class Brands {
           await this.page.locator(archiveBrand_element).click()
           await this.page.locator(archiveBrandName_element).fill(brand_name_value)
           await this.page.locator(archiveButton_element).last().click()
-          await expect(this.page).toHaveURL(/.*archived/)
         }
     }
-    // async checkBrandIsCreateSucess(){
-    //   await expect(this.page).toHaveURL(/.*general/)
-    // }
-    // async checkMoveBrandtoGroupSucess(GroupName){
-    //   await this.page.waitForTimeout(1000)
-    //   await expect(this.page.locator(BrandList_element).nth(2)).toContainText(GroupName)
+    async checkBrandIsCreateSucess(){
+      await expect(this.page).toHaveURL(/.*general/)
+    }
+    async checkMoveBrandtoGroupSucess(GroupName){
+      await this.page.waitForTimeout(1000)
+      await expect(this.page.locator(BrandList_element).nth(2)).toContainText(GroupName)
 
-    // }
-    // async checkBrandIsArchiveSucess(){
-    //   await expect(this.page).toHaveURL(/.*archived/)
-    // }
+    }
+    async checkBrandIsArchiveSucess(){
+      await expect(this.page).toHaveURL(/.*archived/)
+    }
    
 }
     // async checkApiResultSucess(){

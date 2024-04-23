@@ -1,29 +1,34 @@
-// import { test,expect } from '@playwright/test'
+import { test,expect } from '../../utils/Fixture-setup'
 import { Groups } from '../../Page/Brands/group.page'
 /**create Group
  * crate Group after admin user login 
  */
 
-import { test,expect } from '../../utils/Fixture-setup'
-
-// test('test create Group', {tag: '@regression'},
-//     async ({ orgOwner,groupOwner }) => {
-//       // page is authenticated as admin
-//       const Group = new Groups(orgOwner.page)
-//       await Group.goToOverviewPage()
-//       await Group.createGroup()
-//       await Group.checkGroupElementIsExsit(1)
-    
-//       // page is authenticated as group owner
-//       const userGroup = new Groups(groupOwner.page)
-//       await userGroup.goToOverviewPage();
-//       await userGroup.checkGroupElementIsExsit(0)
-//       }
-    
-// );
-
-
+test.describe('test - create group',() => {
+  test('orgOwner', {tag: '@group'},
+      async ({ orgOwner }) => {
+          // page is authenticated as admin
+          const orgOwnerRole = new Groups(orgOwner.page)
+          await orgOwnerRole.goToOverviewPage()
+          await orgOwnerRole.createGroup()
+          await orgOwnerRole.checkGroupElementIsExsit(1)
+  });
+  test('groupOwner', {tag: '@group'},
+      async ({ groupOwner }) => {
+          // page is authenticated as admin
+          const orgOwnerRole = new Groups(groupOwner.page)
+          await orgOwnerRole.goToOverviewPage()
+          await orgOwnerRole.checkGroupElementIsExsit(0)
+  });  
+});
 
 
-
-
+test.describe('test - delete group',() => {
+  test('orgOwner', {tag: '@group'},
+      async ({ orgOwner }) => {
+          // page is authenticated as admin
+          const orgOwnerRole = new Groups(orgOwner.page)
+          await orgOwnerRole.goToOverviewPage()
+          await orgOwnerRole.deleteGroup()
+  });  
+});

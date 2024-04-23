@@ -1,4 +1,4 @@
-import { test,expect } from '@playwright/test'
+import { test,expect } from '../../utils/Fixture-setup';
 import { Brands } from '../../Page/Brands/brand.page'
 import { brands } from "../../testData/brands.json"
 import { generateString, getRandomArrayElements} from "../../utils/Random-setup"
@@ -15,6 +15,48 @@ var GroupName = 'Auto Test(Dont delete)'
 var brand_urls = brands.get_brand_apiRequest_para.get_brand_apiRequest_url
 var brand_apiRequest_data = brands.get_brand_apiRequest_para.get_brand_apiRequest_data
 var brand_expect_result = brands.get_brand_apiRequest_para.get_brand_except_result
+
+test.describe('test - move brands to group',() => {
+    test('orgOwner', {tag: '@brand'},
+        async ({ orgOwner }) => {
+            // page is authenticated as admin
+            const orgOwnerRole = new Brands(orgOwner.page)
+            await orgOwnerRole.goToBrandsPage()
+            await orgOwnerRole.moveBrands('Auto Test Brand',GroupName)
+            await orgOwnerRole.checkMoveBrandtoGroupSucess(GroupName)
+    }); 
+  });
+
+
+/**
+ * 暂时的禁用以下case，请误删
+ * 
+ * 
+ */
+
+// test.describe('test - create core brands',() => {
+//     test('orgOwner', {tag: '@brand'},
+//         async ({ orgOwner }) => {
+//             // page is authenticated as admin
+//             const orgOwnerRole = new Brands(orgOwner.page)
+//             await orgOwnerRole.goToBrandsPage()
+//             await orgOwnerRole.createBrands(BrandName,Core,industry,industry_sub)
+//             await orgOwnerRole.checkBrandIsCreateSucess()
+//     }); 
+//   });
+
+// test.describe('test - create core+ brands',() => {
+//     test('orgOwner', {tag: '@brand'},
+//         async ({ orgOwner }) => {
+//             // page is authenticated as admin
+//             const orgOwnerRole = new Brands(orgOwner.page)
+//             await orgOwnerRole.goToBrandsPage()
+//             await orgOwnerRole.createBrands(BrandName,CorePlus,industry,industry_sub)
+//             await orgOwnerRole.checkBrandIsCreateSucess()
+//     }); 
+//   });
+
+
 // test.use({ storageState: process.env.admin_user_token_path });
 // test('org owner test create core brands',{tag: '@regression'}, 
 //     async ({ page }) => {
