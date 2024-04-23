@@ -12,6 +12,7 @@ import { test,expect } from '../utils/Fixture-setup';
 import { generateString } from '../utils/Random-setup';
 
 const EmailAddress = 'auto+'+generateString(5)+'@kawo.com'
+const EmailAddress_auto = 'auto'
 
 const Groups_selection = 'Auto Test(Dont delete)'
 const Brands_selection = 'Auto Test Brand(Dont Delete)'
@@ -69,10 +70,6 @@ test.describe('test - users tab',() => {
     });
 });
 
-
-
-
-
 test.describe('test - invite user',() => {
     test('org owner', async ({ orgOwner }) => {
         const orgSettings_orgOwner = new OrgSettings(orgOwner.page)
@@ -99,20 +96,11 @@ test.describe('test - invite user',() => {
     });
 });
 
-
-
-
-
-
-
-
-// test.describe('group_owner authentication',() => {
-//     test.use({ storageState: process.env.group_user_token_path });
-    
-//     test('group_owner - has permission to general menu',{tag :'@permission'},
-//     async ({ page }) => {
-//         const OrgSetting = new OrgSettings(page)
-//         await OrgSetting.goToGeneralPage()
-//         await OrgSetting.assertHasPermissionToGeneral()
-//     });
-// });
+test.describe('test - edit user',() => {
+    test('org owner', async ({ orgOwner}) => {
+        const orgSettings_orgOwner = new OrgSettings(orgOwner.page)
+        await orgSettings_orgOwner.goToUsersPage()
+        await orgSettings_orgOwner.editUserFromOrgToGroup(EmailAddress_auto,Groups_selection)
+        await orgSettings_orgOwner.assertEditSuccess(EmailAddress_auto,Groups_selection)
+    });
+})
