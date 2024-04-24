@@ -51,7 +51,7 @@ jobs:
       if: always()
       uses: 8398a7/action-slack@v3
       with:
-        job_name: Run Playwright tests
+        job_name: Run end-to-end tests
         status: custom
         fields: repo,eventName,workflow,job,took
         custom_payload: |
