@@ -57,9 +57,9 @@ jobs:
             {
               attachments: [{
                 color: '${{ job.status }}' === 'success' ? 'good' : 'danger',
-                title: `Playwright Demo Automation Results :test_tube:`,
+                title: `Playwright Automation Results :test_tube:`,
                 fields: [{
-                  title: 'Site Under Test',
+                  title: 'Environment',
                   value: '${{ inputs.environment }}',
                   short: true
                 },
@@ -87,11 +87,6 @@ jobs:
                   title: 'Total Tests',
                   value: (`${{ env.FAILURES }}`.match(/.spec.ts/g) || []).length + (`${{ env.PASSED }}`.match(/.spec.ts/g) || []).length,
                   short: true
-                },
-                {
-                  title: 'Pull Request',
-                  value: `${{ env.PULL_REQUEST_URL }}`,
-                  short: false
                 },
                 {
                   title: 'Failures',
