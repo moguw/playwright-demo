@@ -53,14 +53,18 @@ export class Brands {
 
 ```
 ## ../testcase/Brands/brands.spec.ts
-test.use({ storageState: users.admin_user.admin_User_Token_File_Path });
-test('admin_user test create core brands',{tag: '@regression'}, 
-    async ({ page }) => {
-        // page is authenticated as admin
-        const Brand = new Brands(page)
-        await Brand.goToBrandsPage()
-        await Brand.createBrands(BrandName,Core,industry,industry_sub)
-        await Brand.checkBrandIsCreateSucess()
+test.describe('test - different role create Brands',() => {
+    test('org owner', async ({ orgOwner }) => {
+        const orgOwner = new Brands(orgOwner.page)
+        await orgOwner.goToBrandsPage()
+        await orgOwner.createBrands(name,plan,industry,industry_sub)
+    });
+
+    test('group owner', async ({ groupOwner }) => {
+        const groupOwner = new OrgSettings(groupOwner.page)
+        await groupOwner.goToBrandsPage()
+        await groupOwner.createBrands(name,plan,industry,industry_sub)
+    });
 });
 ```
 
@@ -70,7 +74,7 @@ Project tree:
 ├── README.md
 ├── playwright-testing-kawo-app
 │   ├── envfile  （Storage of all env information）
-│   ├── fixtures （Storage of all test data）
+│   ├── testData （Storage of all test data）
 │   └── Page
 │       ├── Brand.page.ts  ( element operater )
 │       ├── ...
@@ -79,12 +83,14 @@ Project tree:
 │       ├── ...
 │   └── utils
 │       ├── API-setup.ts （ requrest.get/post/.. api ）
+│       ├── Fixture-setup.ts （ （Storage of different role page ）
 │       ├── ENV-setup.ts （ read different env information ）
 │       └── Random-setup.ts （ generate random string...）
 ├── playwright.config.ts （ global set,such as url,report,browser.. ）
 ├── package.json
 ├── test-result  ( only failure result will screeshot )
 ├── playwright-report  ( Storage of all report information )
+├── github/workflows/paywright.yaml  ( run cases and send result to slack channel )
 ```
 
 ### **Prerequisites**
@@ -95,6 +101,7 @@ The only requirement for this project is to have Node.js version 14 installed on
 1. nodejs
 2. playwright
 3. dotenv (npm i -D dotenv)
+4. playwright-json-summary-reporter (npm install playwright-json-summary-reporter --save-dev)
 ```
 ### **Run Test**
 ```
@@ -102,6 +109,6 @@ The only requirement for this project is to have Node.js version 14 installed on
 npm run debug
 
 # browsing mode running test in the delta/staging/beta environment
-npm run delta_regresionCase/staging_regresionCase
+npm run staging-app/staging-delta...
 ```
 
