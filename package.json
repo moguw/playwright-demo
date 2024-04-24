@@ -4,9 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "staging-app": "test_env=staging-app npx playwright test",
-    "staging-delta": "test_env=staging-delta npx playwright test",
-    "debug": "test_env=staging-app npx playwright test --ui"
+    "local": "test_env=local npx playwright test",
+    "debug": "test_env=local npx playwright test --ui"
   },
   "keywords": [],
   "author": "",
