@@ -2,11 +2,11 @@
  * General menu 
  * Users tab
  * Invite user
+ * Edit user
  * ...
 */
 
 import { Page,expect } from '@playwright/test';
-import { parseArgs } from 'util';
 
 
 const RemindNoPermission_element = 'h2.kui-typ.kui-typ__h2'
@@ -16,9 +16,15 @@ const General_title = /.*General/
 // Users page
 const Users_tab = 'Users'
 const InviteUsers_btn = 'Invite User'
-const EmailAddress_element = 'div.kui-typ.kui-typ__body3'
 const SearchNameOrEmail_placeholder = 'Name or Email'
 const Role_dropdown_box = 'Role'
+const Role_orgOwner = 'Org Owner'
+const Role_groupOwner = 'Group Owner'
+const Role_brandOwner = 'Brand Owner'
+const Role_operator = 'Operator'
+const EmailAddress_info__ele = 'div.kui-typ.kui-typ__body3'
+const Roles_info_ele = 'td.user-management__roles-cell.kui-table-body__cell'
+const EditUser_btn_element = 'button[data-tooltip="Edit User"]'
 
 // Invite(Edit) User Pop-up
 const Email_placeholder = "Please enter the invitee's email address"
@@ -27,12 +33,15 @@ const Groups_dropdown_box = 'Brand Groups'
 const Brands_dropdown_box = 'Brands'
 const DeleteRole_btn_element = 'div.roleCell--y9CHN > button.kui-button-base.kui-button'
 const Save_btn = 'Save'
+const EmailInfo_ele = 'div.userInfoCard--S9iIf > div.userInfoSection--U7wme > div.kui-typ.kui-typ__body2'
 
 export class OrgSettings {
     page: Page;
     constructor(page: Page) {
       this.page = page;
     }
+
+    // general menu
     async goToGeneralPage() {
         await this.page.goto('/automation-test/settings/general')
     } 
@@ -42,7 +51,8 @@ export class OrgSettings {
     async assertNoPermissionToPage() {
         await expect(this.page.locator(RemindNoPermission_element)).toHaveText(RemindNoPermission_text)
     }   
-
+    
+    // users tab
     async goToUsersPage() {
         await this.page.goto('/automation-test/settings/users')
     }
@@ -50,12 +60,13 @@ export class OrgSettings {
         await expect(this.page.getByRole('button', {name: Users_tab})).toBeVisible()
     }
 
-    async inviteUsersToBeOrgOwner(EmailAddress) {
+    // invite user 
+    async inviteUserToBeOrgOwner(EmailAddress) {
         await this.page.getByRole('button', {name: InviteUsers_btn}).first().click()
         await this.page.getByPlaceholder(Email_placeholder).fill(EmailAddress)
         await this.page.getByRole('button', {name: Invite_btn}).last().click()
     }
-    async inviteUsersToBeGroupOwner(EmailAddress,Groups_selection) {
+    async inviteUserToBeGroupOwner(EmailAddress,Groups_selection) {
         await this.page.getByRole('button', {name: InviteUsers_btn}).first().click()
         await this.page.getByPlaceholder(Email_placeholder).fill(EmailAddress)
         await this.page.locator('button.kui-select__btn', {hasText: Groups_dropdown_box}).last().click()
@@ -63,7 +74,7 @@ export class OrgSettings {
         await this.page.locator(DeleteRole_btn_element).click({force: true})
         await this.page.getByRole('button', {name: Invite_btn}).last().click()
     }
-    async inviteUsersToBeBrandOwner(EmailAddress,Groups_selection,Brands_selection) {
+    async inviteUserToBeBrandOwner(EmailAddress,Groups_selection,Brands_selection) {
         await this.page.getByRole('button', {name: InviteUsers_btn}).first().click()
         await this.page.getByPlaceholder(Email_placeholder).fill(EmailAddress)
         await this.page.locator('button.kui-select__btn', {hasText: Brands_dropdown_box}).last().click()
@@ -73,30 +84,79 @@ export class OrgSettings {
     }
     async assertInviteSuccess(EmailAddress) {
         await this.page.getByPlaceholder(SearchNameOrEmail_placeholder).fill(EmailAddress)
-        await expect(this.page.locator(EmailAddress_element)).toContainText(EmailAddress)
+        await expect(this.page.locator(EmailAddress_info__ele)).toContainText(EmailAddress)
     }
 
+    // edit user
     async editUserFromOrgToGroup(EmailAddress,Groups_selection) {
-        await this.page.getByRole('button',{name: Role_dropdown_box}).first().click()
-        await this.page.getByRole('listitem').getByRole('option',{name: 'Org Owner'}).first().click()
-        await this.page.locator('div.kui-typ.kui-typ__body2.filterCountFiltered--SGZV9',{hasText: 'Filtered'}).first().click()
-        // await this.page.locator('div.kui-typ.kui-typ__slogan.kawo-page-title',{hasText:'User Management'}).first().click()
         await this.page.getByPlaceholder(SearchNameOrEmail_placeholder).fill(EmailAddress)
-        await this.page.locator('button[data-tooltip="Edit User"]').first().click()
-        const emailAddress_info = await this.page.locator('div.kui-typ.kui-typ__body2').innerText()
-        await this.page.locator('button.kui-button-base.kui-button.kui-select__btn').first().click()
-        await this.page.getByRole('listitem').getByRole('option',{name: 'Group Owner'}).first().click()
-        await this.page.locator('button.kui-select__btn', {hasText: Groups_dropdown_box}).last().click()
+        await this.page.getByRole('button',{name: Role_dropdown_box}).first().click()
+        await this.page.getByRole('listitem').getByRole('option',{name: Role_orgOwner}).first().click()
+        await this.page.locator(EditUser_btn_element).first().dblclick({force: true})
+        const emailAddress_info = await this.page.locator(EmailInfo_ele).last().innerText()
+        await this.page.locator('button.kui-select__btn',{hasText: Role_orgOwner}).last().click()
+        await this.page.getByRole('listitem').getByRole('option',{name: Role_groupOwner}).first().click()
+        await this.page.locator('button.kui-select__btn',{hasText: Groups_dropdown_box}).last().click()
         await this.page.getByRole('listitem').getByRole('option',{name: Groups_selection}).first().click()
-        await this.page.locator(DeleteRole_btn_element).click({force: true})
-        await this.page.getByRole('button', {name: Save_btn}).last().click()
+        await this.page.getByRole('button', {name: Save_btn}).last().dblclick({force: true})
+        await this.page.getByRole('button',{name: Save_btn}).last().click()
         return emailAddress_info
     }
 
-    async assertEditSuccess(EmailAddress,Groups_selection) {
+    async assertEditFromOrgToGroupSuccess(EmailAddress,Groups_selection) {
         const emailAddress_info = await this.editUserFromOrgToGroup(EmailAddress,Groups_selection)
+        await this.page.getByRole('button',{name: Role_orgOwner}).first().click()
+        await this.page.getByRole('listitem').getByRole('option',{name: Role_orgOwner}).first().click()
+        await this.page.getByRole('listitem').getByRole('option',{name: Role_groupOwner}).first().click()
         await this.page.getByPlaceholder(SearchNameOrEmail_placeholder).fill(emailAddress_info)
-        await expect(this.page.locator('td.user-management__roles-cell.kui-table-body__cell')).toHaveText('Org Owner')
+        await expect(this.page.locator(Roles_info_ele)).toHaveText(Role_groupOwner)  
+    }
+ 
+    async editUserFromGroupToBrand(EmailAddress,Groups_selection,Brands_selection) {
+        await this.page.getByPlaceholder(SearchNameOrEmail_placeholder).fill(EmailAddress)
+        await this.page.getByRole('button',{name: Role_dropdown_box}).first().click()
+        await this.page.getByRole('listitem').getByRole('option',{name: Role_groupOwner}).first().click()
+        await this.page.locator(EditUser_btn_element).first().dblclick({force: true})
+        const emailAddress_info = await this.page.locator(EmailInfo_ele).last().innerText()
+        await this.page.locator('button.kui-select__btn',{hasText: Role_groupOwner}).last().click()
+        await this.page.getByRole('listitem').getByRole('option',{name: Role_brandOwner}).first().click()
+        await this.page.locator('button.kui-select__btn', {hasText: Brands_dropdown_box}).last().click()
+        await this.page.getByRole('listitem').getByRole('button',{name: Groups_selection}).first().click()
+        await this.page.getByRole('listitem').getByRole('option',{name: Brands_selection}).first().click()
+        await this.page.getByRole('button', {name: Save_btn}).last().click()
+        await this.page.getByRole('button',{name: Save_btn}).last().click()
+        return emailAddress_info
+    }
+
+    async assertEditFromGroupToBrandSuccess(EmailAddress,Groups_selection,Brands_selection) {
+        const emailAddress_info = await this.editUserFromGroupToBrand(EmailAddress,Groups_selection,Brands_selection)
+        await this.page.getByRole('button',{name: Role_groupOwner}).first().click()
+        await this.page.getByRole('listitem').getByRole('option',{name: Role_groupOwner}).first().click()
+        await this.page.getByRole('listitem').getByRole('option',{name: Role_brandOwner}).first().click()
+        await this.page.getByPlaceholder(SearchNameOrEmail_placeholder).fill(emailAddress_info)
+        await expect(this.page.locator(Roles_info_ele)).toHaveText(Role_brandOwner)         
+    }
+
+    async editUserFromBrandToOperator(EmailAddress) {
+        await this.page.getByPlaceholder(SearchNameOrEmail_placeholder).fill(EmailAddress)
+        await this.page.getByRole('button',{name: Role_dropdown_box}).first().click()
+        await this.page.getByRole('listitem').getByRole('option',{name: Role_brandOwner}).first().click()
+        await this.page.locator(EditUser_btn_element).first().dblclick({force: true})
+        const emailAddress_info = await this.page.locator(EmailInfo_ele).last().innerText()
+        await this.page.locator('button.kui-select__btn',{hasText: Role_brandOwner}).last().click()
+        await this.page.getByRole('listitem').getByRole('option',{name: Role_operator}).first().click()
+        await this.page.getByRole('button', {name: Save_btn}).last().click()
+        await this.page.getByRole('button',{name: Save_btn}).last().click()
+        return emailAddress_info    
+    }
+
+    async assertEditFromBrandToOperatorSuccess(EmailAddress) {
+        const emailAddress_info = await this.editUserFromBrandToOperator(EmailAddress)
+        await this.page.getByRole('button',{name: Role_brandOwner}).first().click()
+        await this.page.getByRole('listitem').getByRole('option',{name: Role_brandOwner}).first().click()
+        await this.page.getByRole('listitem').getByRole('option',{name: Role_operator}).first().click()
+        await this.page.getByPlaceholder(SearchNameOrEmail_placeholder).fill(emailAddress_info)
+        await expect(this.page.locator(Roles_info_ele)).toHaveText(Role_operator)  
     }
 
 
