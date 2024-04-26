@@ -16,9 +16,9 @@ test.describe('test - create group',() => {
   test('groupOwner', {tag: '@group'},
       async ({ groupOwner }) => {
           // page is authenticated as admin
-          const orgOwnerRole = new Groups(groupOwner.page)
-          await orgOwnerRole.goToOverviewPage()
-          await orgOwnerRole.checkGroupElementIsExsit(0)
+          const groupOwnerRole = new Groups(groupOwner.page)
+          await groupOwnerRole.goToOverviewPage()
+          await groupOwnerRole.checkGroupElementIsExsit(0)
   });  
 });
 
