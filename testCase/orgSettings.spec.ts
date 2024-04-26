@@ -2,10 +2,13 @@
  * General menu
  * Users tab
  * Invite user
+ * Edit user
+ * Delete user
+ * Competitors tab
+ * Billing tab
  * ...
 */
 
-// import { test,expect } from '@playwright/test'
 import { describe } from 'node:test';
 import { OrgSettings } from '../Page/orgSettings.page';
 import { test,expect } from '../utils/Fixture-setup';
@@ -17,102 +20,164 @@ const Search_auto = 'auto'
 const Groups_selection = 'Auto Test(Dont delete)'
 const Brands_selection = 'Auto Test Brand(Dont Delete)'
 
+const Role_orgOwner = 'Org Owner'
+const Role_groupOwner = 'Group Owner'
+const Role_brandOwner = 'Brand Owner'
+const Role_operator = 'Operator'
 
-test.describe('test - general menu',() => {
-    test('org owner', async ({ orgOwner }) => {
-        const OrgSettings_orgOwner = new OrgSettings(orgOwner.page)
-        await OrgSettings_orgOwner.goToGeneralPage()
-        await OrgSettings_orgOwner.assertHasPermissionToGeneral()
+
+
+test.describe('test - orgsettings cases',() => {
+    let OrgSettings_orgOwner,OrgSettings_groupOwner,OrgSettings_brandOwner,OrgSettings_operator : OrgSettings
+  
+    test.beforeEach(async ({ orgOwner,groupOwner,brandOwner,operator }) => {
+        OrgSettings_orgOwner = new OrgSettings(orgOwner.page)
+        OrgSettings_groupOwner = new OrgSettings(groupOwner.page)
+        OrgSettings_brandOwner = new OrgSettings(brandOwner.page)
+        OrgSettings_operator = new OrgSettings(operator.page)
+    })
+    
+    test.describe('test - general menu',() => {
+        test('org owner', async ({}) => {
+            await OrgSettings_orgOwner.goToGeneralPage()
+            await OrgSettings_orgOwner.assertHasPermissionToGeneral()
+        });
+        test('group owner', async ({}) => {
+            await OrgSettings_groupOwner.goToGeneralPage()
+            await OrgSettings_groupOwner.assertHasPermissionToGeneral()
+        });
+    
+        test('brand owner', async ({}) => {
+            await OrgSettings_brandOwner.goToGeneralPage()
+            await OrgSettings_brandOwner.assertHasPermissionToGeneral() 
+        });
+    
+        test('operator', async ({}) => {
+            await OrgSettings_operator.goToGeneralPage()
+            await OrgSettings_operator.assertNoPermissionToPage()
+        });
     });
 
-    test('group owner', async ({ groupOwner }) => {
-        const OrgSettings_groupOwner = new OrgSettings(groupOwner.page)
-        await OrgSettings_groupOwner.goToGeneralPage()
-        await OrgSettings_groupOwner.assertHasPermissionToGeneral()
+    test.describe('test - users tab',() => {
+        test('org owner', async ({}) => {
+            await OrgSettings_orgOwner.goToUsersPage()
+            await OrgSettings_orgOwner.assertHasPermissionToUsers()
+        });
+    
+        test('group owner', async ({}) => {
+            await OrgSettings_groupOwner.goToUsersPage()
+            await OrgSettings_groupOwner.assertHasPermissionToUsers()  
+        });
+    
+        test('brand owner', async ({}) => {
+            await OrgSettings_brandOwner.goToUsersPage()
+            await OrgSettings_brandOwner.assertHasPermissionToUsers()  
+        });
+    
+        test('operator', async ({}) => {
+            await OrgSettings_operator.goToUsersPage()
+            await OrgSettings_operator.assertNoPermissionToPage()   
+        });
     });
-
-    test('brand owner', async ({ brandOwner }) => {
-        const OrgSettings_brandOwner = new OrgSettings(brandOwner.page)
-        await OrgSettings_brandOwner.goToGeneralPage()
-        await OrgSettings_brandOwner.assertHasPermissionToGeneral() 
+    
+    test.describe('test - invite user',() => {
+        test('org owner', async ({}) => {
+            const EmailAddress_value = EmailAddress_auto
+            await OrgSettings_orgOwner.goToUsersPage()
+            await OrgSettings_orgOwner.inviteUserToBeOrgOwner(EmailAddress_value)
+            await OrgSettings_orgOwner.assertInviteSuccess(EmailAddress_value)
+        });
+    
+        test('group owner', async ({}) => {
+            const EmailAddress_value = EmailAddress_auto
+            await OrgSettings_groupOwner.goToUsersPage()
+            await OrgSettings_groupOwner.inviteUserToBeGroupOwner(EmailAddress_value,Groups_selection)
+            await OrgSettings_groupOwner.assertInviteSuccess(EmailAddress_value)
+        });
+    
+        test('brand owner', async ({}) => {
+            const EmailAddress_value = EmailAddress_auto
+            await OrgSettings_brandOwner.goToUsersPage()
+            await OrgSettings_brandOwner.inviteUserToBeBrandOwner(EmailAddress_value,Groups_selection,Brands_selection)
+            await OrgSettings_brandOwner.assertInviteSuccess(EmailAddress_value)
+        });
     });
-
-    test('operator', async ({ operator }) => {
-        const OrgSettings_operator = new OrgSettings(operator.page)
-        await OrgSettings_operator.goToGeneralPage()
-        await OrgSettings_operator.assertNoPermissionToPage()
+    
+    test.describe('test - edit user',() => {
+        test('org owner', async ({}) => {
+            await OrgSettings_orgOwner.goToUsersPage()
+            await OrgSettings_orgOwner.assertEditFromOrgToGroupSuccess(Search_auto,Groups_selection)
+        });
+    
+        test('group owner', async ({}) => {
+            await OrgSettings_groupOwner.goToUsersPage()
+            await OrgSettings_groupOwner.assertEditFromGroupToBrandSuccess(Search_auto,Groups_selection,Brands_selection)
+        });
+    
+        test('brand owner', async ({}) => {
+            await OrgSettings_brandOwner.goToUsersPage()
+            await OrgSettings_brandOwner.assertEditFromBrandToOperatorSuccess(Search_auto)
+        });
     });
-});
-
-test.describe('test - users tab',() => {
-    test('org owner', async ({ orgOwner }) => {
-        const orgSettings_orgOwner = new OrgSettings(orgOwner.page)
-        await orgSettings_orgOwner.goToUsersPage()
-        await orgSettings_orgOwner.assertHasPermissionToUsers()
+    
+    test.describe('test - delete user',() => {
+        test('org owner', async ({}) => {
+            await OrgSettings_orgOwner.goToUsersPage()
+            await OrgSettings_orgOwner.assertDeleteUserSuccess(Search_auto,Role_orgOwner)
+        });
+    
+        test('group owner', async ({}) => {
+            await OrgSettings_groupOwner.goToUsersPage()
+            await OrgSettings_groupOwner.assertDeleteUserSuccess(Search_auto,Role_groupOwner)
+        });
+    
+        test('brand owner', async ({}) => {
+            await OrgSettings_brandOwner.goToUsersPage()
+            await OrgSettings_brandOwner.assertDeleteUserSuccess(Search_auto,Role_brandOwner)
+        });
     });
-
-    test('group owner', async ({ groupOwner }) => {
-        const orgSettings_groupOwner = new OrgSettings(groupOwner.page)
-        await orgSettings_groupOwner.goToUsersPage()
-        await orgSettings_groupOwner.assertHasPermissionToUsers()  
+    
+    test.describe('test - competitors tab',() => {
+        test('org owner', async ({}) => {
+            await OrgSettings_orgOwner.goToCompetitorsPage()
+            await OrgSettings_orgOwner.assertHasPermissionToCompetitors()
+        });
+    
+        test('group owner', async ({}) => {
+            await OrgSettings_groupOwner.goToCompetitorsPage()
+            await OrgSettings_groupOwner.assertNoPermissionToPage()
+        });
+    
+        test('brand owner', async ({}) => {
+            await OrgSettings_brandOwner.goToCompetitorsPage()
+            await OrgSettings_brandOwner.assertNoPermissionToPage()
+        });
+    
+        test('operator', async ({}) => {
+            await OrgSettings_operator.goToCompetitorsPage()
+            await OrgSettings_operator.assertNoPermissionToPage()
+        });
     });
-
-    test('brand owner', async ({ brandOwner }) => {
-        const orgSettings_brandOwner = new OrgSettings(brandOwner.page)
-        await orgSettings_brandOwner.goToUsersPage()
-        await orgSettings_brandOwner.assertHasPermissionToUsers()  
+    
+    test.describe('test - billing tab',() => {
+        test('org owner', async ({}) => {
+            await OrgSettings_orgOwner.goToBillingPage()
+            await OrgSettings_orgOwner.assertHasPermissionToBilling()
+        });
+    
+        test('group owner', async ({}) => {
+            await OrgSettings_groupOwner.goToBillingPage()
+            await OrgSettings_groupOwner.assertNoPermissionToPage()
+        });
+    
+        test('brand owner', async ({}) => {
+            await OrgSettings_brandOwner.goToBillingPage()
+            await OrgSettings_brandOwner.assertNoPermissionToPage()
+        });
+    
+        test('operator', async ({}) => {
+            await OrgSettings_operator.goToBillingPage()
+            await OrgSettings_operator.assertNoPermissionToPage()
+        });
     });
-
-    test('operator', async ({ operator }) => {
-        const orgSettings_operator = new OrgSettings(operator.page)
-        await orgSettings_operator.goToUsersPage()
-        await orgSettings_operator.assertNoPermissionToPage()   
-    });
-});
-
-test.describe('test - invite user',() => {
-    test('org owner', async ({ orgOwner }) => {
-        const orgSettings_orgOwner = new OrgSettings(orgOwner.page)
-        const EmailAddress_value = EmailAddress_auto
-        await orgSettings_orgOwner.goToUsersPage()
-        await orgSettings_orgOwner.inviteUserToBeOrgOwner(EmailAddress_value)
-        await orgSettings_orgOwner.assertInviteSuccess(EmailAddress_value)
-    });
-
-    test('group owner', async ({ groupOwner }) => {
-        const orgSettings_groupOwner = new OrgSettings(groupOwner.page)
-        const EmailAddress_value = EmailAddress_auto
-        await orgSettings_groupOwner.goToUsersPage()
-        await orgSettings_groupOwner.inviteUserToBeGroupOwner(EmailAddress_value,Groups_selection)
-        await orgSettings_groupOwner.assertInviteSuccess(EmailAddress_value)
-    });
-
-    test('brand owner', async ({ brandOwner }) => {
-        const orgSettings_brandOwner = new OrgSettings(brandOwner.page)
-        const EmailAddress_value = EmailAddress_auto
-        await orgSettings_brandOwner.goToUsersPage()
-        await orgSettings_brandOwner.inviteUserToBeBrandOwner(EmailAddress_value,Groups_selection,Brands_selection)
-        await orgSettings_brandOwner.assertInviteSuccess(EmailAddress_value)
-    });
-});
-
-test.describe('test - edit user',() => {
-    test('org owner', async ({ orgOwner}) => {
-        const orgSettings_orgOwner = new OrgSettings(orgOwner.page)
-        await orgSettings_orgOwner.goToUsersPage()
-        await orgSettings_orgOwner.assertEditFromOrgToGroupSuccess(Search_auto,Groups_selection)
-    });
-
-    test('group owner', async ({ groupOwner }) => {
-        const orgSettings_groupOwner = new OrgSettings(groupOwner.page)
-        await orgSettings_groupOwner.goToUsersPage()
-        await orgSettings_groupOwner.assertEditFromGroupToBrandSuccess(Search_auto,Groups_selection,Brands_selection)
-    });
-
-    test('brand owner', async ({ brandOwner }) => {
-        const orgSettings_brandOwner = new OrgSettings(brandOwner.page)
-        await orgSettings_brandOwner.goToUsersPage()
-        await orgSettings_brandOwner.assertEditFromBrandToOperatorSuccess(Search_auto)
-    });
-
 })

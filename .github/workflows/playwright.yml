@@ -11,6 +11,7 @@ on:
         - staging-app
         - staging-delta
         - staging-gamma
+        - staging-beta
 jobs:
   test:
     name: Run end-to-end tests
