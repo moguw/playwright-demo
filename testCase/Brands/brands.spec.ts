@@ -15,18 +15,25 @@ var GroupName = 'Auto Test(Dont delete)'
 var brand_urls = brands.get_brand_apiRequest_para.get_brand_apiRequest_url
 var brand_apiRequest_data = brands.get_brand_apiRequest_para.get_brand_apiRequest_data
 var brand_expect_result = brands.get_brand_apiRequest_para.get_brand_except_result
+test.describe('test brand case',()=>{
+  /**
+   * test.beforeEach 执行测试用例前的准备工作
+   */
+  let orgOwnerRole, groupOwnerRole: Brands
 
-test.describe('test - move brands to group',() => {
-    test('orgOwner', {tag: '@brand'},
-        async ({ orgOwner }) => {
-            // page is authenticated as admin
-            const orgOwnerRole = new Brands(orgOwner.page)
-            await orgOwnerRole.goToBrandsPage()
-            await orgOwnerRole.moveBrands('Auto Test Brand',GroupName)
-            await orgOwnerRole.checkMoveBrandtoGroupSucess(GroupName)
-    }); 
-  });
-
+  test.beforeEach(async ({ orgOwner }) => {
+      orgOwnerRole = new Brands(orgOwner.page)
+  })
+  test.describe('test - move brands to group',() => {
+      test('orgOwner', {tag: '@brand'},
+          async ({ }) => {
+              // page is authenticated as orgOwner
+              await orgOwnerRole.goToBrandsPage()
+              await orgOwnerRole.moveBrands('Auto Test Brand',GroupName)
+              await orgOwnerRole.checkMoveBrandtoGroupSucess(GroupName)
+      }); 
+    });
+})
 
 /**
  * 暂时的禁用以下case，请误删
