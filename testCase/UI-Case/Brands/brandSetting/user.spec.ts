@@ -1,5 +1,5 @@
-import { test,expect } from '../../../utils/Fixture-setup';
-import { User } from '../../../Page/Brands/brandSetting/user.page'
+import { test,expect } from '../../../../utils/Fixture-setup';
+import { User } from '../../../../Page/Brands/brandSetting/user.page'
 
 test.describe('test brand-user case',()=>{
     /**
@@ -11,7 +11,7 @@ test.describe('test brand-user case',()=>{
         orgOwnerRole = new User(orgOwner.page)
     })
     test.describe('test - delete user',() => {
-        test('orgOwner', {tag: '@brand-user'},
+        test('orgOwner', {tag: ['@brand-user','@UI']},
             async ({ }) => {
                 // page is authenticated as orgOwner
                 await orgOwnerRole.goToBrandSettingPage()

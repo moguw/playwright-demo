@@ -1,5 +1,5 @@
-import { test,expect } from '../../../utils/Fixture-setup';
-import { General } from '../../../Page/Brands/brandSetting/general.page'
+import { test,expect } from '../../../../utils/Fixture-setup';
+import { General } from '../../../../Page/Brands/brandSetting/general.page'
 
 test.describe('test brand-general case',()=>{
     /**

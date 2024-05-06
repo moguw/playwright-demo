@@ -1,5 +1,5 @@
-import { test,expect } from '../../utils/Fixture-setup'
-import { Groups } from '../../Page/Brands/group.page'
+import { test,expect } from '../../../utils/Fixture-setup'
+import { Groups } from '../../../Page/Brands/group.page'
 /**create Group
  * crate Group after admin user login 
  */

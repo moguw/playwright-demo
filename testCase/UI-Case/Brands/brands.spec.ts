@@ -1,20 +1,15 @@
-import { test,expect } from '../../utils/Fixture-setup';
-import { Brands } from '../../Page/Brands/brand.page'
-import { brands } from "../../testData/brands.json"
-import { generateString, getRandomArrayElements} from "../../utils/Random-setup"
-import { api_Requests } from '../../utils/API-setup'
+import { test,expect } from '../../../utils/Fixture-setup';
+import { Brands } from '../../../Page/Brands/brand.page'
+import { brands_ui_info } from "../../../testData/brands.json"
 /**create Group
  * crate Group after org owner login 
  */
-var BrandName = brands.name
-var Core = brands.plan.core
-var CorePlus = brands.plan.corePlus
-var industry = brands.industry.Automotive
-var industry_sub = brands.industry.Auto_Brand
+var BrandName = brands_ui_info.name
+var Core = brands_ui_info.plan.core
+var CorePlus = brands_ui_info.plan.corePlus
+var industry = brands_ui_info.industry.Automotive
+var industry_sub = brands_ui_info.industry.Auto_Brand
 var GroupName = 'Auto Test(Dont delete)'
-var brand_urls = brands.get_brand_apiRequest_para.get_brand_apiRequest_url
-var brand_apiRequest_data = brands.get_brand_apiRequest_para.get_brand_apiRequest_data
-var brand_expect_result = brands.get_brand_apiRequest_para.get_brand_except_result
 test.describe('test brand case',()=>{
   /**
    * test.beforeEach 执行测试用例前的准备工作

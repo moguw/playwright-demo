@@ -10,9 +10,9 @@
 */
 
 import { describe } from 'node:test';
-import { OrgSettings } from '../Page/orgSettings.page';
-import { test,expect } from '../utils/Fixture-setup';
-import { generateString } from '../utils/Random-setup';
+import { OrgSettings } from '../../Page/orgSettings.page';
+import { test,expect } from '../../utils/Fixture-setup';
+import { generateString } from '../../utils/Random-setup';
 
 const EmailAddress_auto = 'auto+'+generateString(5)+'@kawo.com'
 const Search_auto = 'auto'

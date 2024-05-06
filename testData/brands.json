@@ -1,5 +1,5 @@
 {
-    "brands":{
+    "brands_ui_info":{
         "name": "Brand Test",
         "plan":{
             "core": "Core",
@@ -8,11 +8,24 @@
         "industry": {
             "Automotive": "Automotive",
             "Auto_Brand": "Auto Brand"
+        }
+    },
+    "brands_api_info":{
+        "url": "/api/v2/brandgroupmove",
+        "method": "post",
+        "request_datas_case":{
+            "case_moveIn_sucess_to_group": {
+                "brandIds": ["65f26b967c32895338a88ba4"],
+                "groupId": "65eeb80a088886543ce3855d"
+            },
+            "case_moveOut_sucess_to_group": {
+                "brandIds": ["65f26b967c32895338a88ba4"],
+                "groupId": ""
+            }
         },
-        "get_brand_apiRequest_para":{
-            "get_brand_apiRequest_url": "api/v2/brand?slug=automation-test&status=active",
-            "get_brand_apiRequest_data":"{}",
-            "get_brand_except_result":"6613b052b59b1c1e72a35aa8"
+        "except_datas_case":{
+            "case_moveIn_sucess_to_group": "65f26b967c32895338a88ba4",
+            "case_moveOut_sucess_to_group": "Missing required parameters" 
         }
     }
 }

@@ -4,8 +4,8 @@
  * ...
 */
 
-import { BrandKPIs } from '../../Page/KPIs/brand_KPIs.page';
-import { test,expect } from '../../utils/Fixture-setup'
+import { BrandKPIs } from '../../../Page/KPIs/brand_KPIs.page';
+import { test,expect } from '../../../utils/Fixture-setup'
 
 test.describe('test - brand KPIs',() => {
     let orgOwnerRole,groupOwnerRole,brandOwnerRole,operatorRole : BrandKPIs

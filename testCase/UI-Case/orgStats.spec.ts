@@ -3,8 +3,8 @@
  * ...
 */
 
-import { OrgStats } from '../Page/orgStats.page';
-import { test,expect } from '../utils/Fixture-setup';
+import { OrgStats } from '../../Page/orgStats.page';
+import { test,expect } from '../../utils/Fixture-setup';
 
 test.describe('test - org stats cases',() => {
     let OrgStats_orgOwner,OrgStats_groupOwner,OrgStats_brandOwner,OrgStats_operator : OrgStats
