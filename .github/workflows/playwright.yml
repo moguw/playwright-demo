@@ -71,7 +71,7 @@ jobs:
                   short: true
                 },
                 {
-                  title: '**Repo:',
+                  title: **'**Repo:'**,
                   value: `${process.env.AS_REPO}`,
                   short: true
                 },

@@ -43,7 +43,6 @@ export class api_Requests {
         data: datas
       });
       var rsp = JSON.parse(await GetData.text())
-      console.log("api request result:", rsp)
       return rsp
     }
    

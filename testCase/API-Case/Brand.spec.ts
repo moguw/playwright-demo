@@ -4,10 +4,10 @@ import { brands_api_info } from '../../testData/brands.json'
 
 const url = brands_api_info.url
 const method = brands_api_info.method
-const request_datas = [brands_api_info.request_datas_case['case_moveIn_sucess_to_group'],
-                        brands_api_info.request_datas_case['case_moveOut_sucess_to_group']]
-const expect_datas= [brands_api_info.except_datas_case['case_moveIn_sucess_to_group'],
-                        brands_api_info.except_datas_case['case_moveOut_sucess_to_group']]
+const request_datas = [brands_api_info.case['moveIn_sucess_to_group_case'],
+                        brands_api_info.case['moveIn_failed_to_group_case']]
+const expect_datas= [brands_api_info.exceptResponse['moveIn_sucess_to_group_case'],
+                        brands_api_info.exceptResponse['moveIn_failed_to_group_case']]
 
 test.describe("test - brand case", () => {
     let api: api_Requests
