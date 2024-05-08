@@ -47,8 +47,8 @@ jobs:
         FLAKEY=$(cat ./summary.json | jq -r '.flakey[]' | tr '\n' ' ')
         echo "FLAKEY=$FLAKEY" >> $GITHUB_ENV 
         TIMEOUT=$(cat ./summary.json | jq -r '.timedOut[]' | tr '\n' ' ' | sed 's/ /--->TIMEOUT /g')
+        echo "TIMEOUT=$TIMEOUT" >> $GITHUB_ENV
         FAILURES=$(cat ./summary.json | jq -r '.failed[]' | tr '\n' ' ')
-        FAILURES+=$TIMEOUT
         echo "FAILURES=$FAILURES" >> $GITHUB_ENV
     - name: Send Slack Notification
       if: always()
@@ -94,7 +94,7 @@ jobs:
                 },
                 {
                   title: '**FLAKEY:',
-                  value: `${{ env.FLAKEY }}` === '' ? 'No FLAKEY' : `${{ env.FLAKEY }}`.match(/.spec.ts/g).length > 10 ? `Too many FLAKEY to print. Please go to GitHub to see full list of FLAKEY` : '```${{ env.FLAKEY }}```'.replace(/ /g, '\n'),
+                  value: `${{ env.FLAKEY }}` === '' ? 'No FLAKEY' : `${{ env.FLAKEY }}`.match(/.spec.ts/g).length > 20 ? `Too many FLAKEY to print. Please go to GitHub to see full list of FLAKEY` : '```${{ env.FLAKEY }}```'.replace(/ /g, '\n'),
                   short: false
                 },
                 {
