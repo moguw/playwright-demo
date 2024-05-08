@@ -44,6 +44,8 @@ jobs:
         echo "STATUS=$STATUS" >> $GITHUB_ENV 
         PASSED=$(cat ./summary.json | jq -r '.passed[]' | tr '\n' ' ')
         echo "PASSED=$PASSED" >> $GITHUB_ENV 
+        FLAKEY=$(cat ./summary.json | jq -r '.flakey[]' | tr '\n' ' ')
+        echo "FLAKEY=$FLAKEY" >> $GITHUB_ENV 
         TIMEOUT=$(cat ./summary.json | jq -r '.timedOut[]' | tr '\n' ' ' | sed 's/ /--->TIMEOUT /g')
         FAILURES=$(cat ./summary.json | jq -r '.failed[]' | tr '\n' ' ')
         FAILURES+=$TIMEOUT
@@ -91,6 +93,11 @@ jobs:
                   short: true
                 },
                 {
+                  title: '**FLAKEY:',
+                  value: `${{ env.FLAKEY }}` === '' ? 'No FLAKEY' : `${{ env.FLAKEY }}`.match(/.spec.ts/g).length > 10 ? `Too many FLAKEY to print. Please go to GitHub to see full list of FLAKEY` : '```${{ env.FLAKEY }}```'.replace(/ /g, '\n'),
+                  short: false
+                },
+                {
                   title: '**Failures:',
                   value: `${{ env.FAILURES }}` === '' ? 'No failures' : `${{ env.FAILURES }}`.match(/.spec.ts/g).length > 10 ? `Too many failures to print. Please go to GitHub to see full list of failures` : '```${{ env.FAILURES }}```'.replace(/ /g, '\n'),
                   short: false
@@ -100,10 +107,11 @@ jobs:
       env:
         FAILURES: ${{ env.FAILURES }}
         PASSED: ${{ env.PASSED }}
+        FLAKEY: ${{ env.FLAKEY }}
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} 
     - uses: actions/upload-artifact@v4
       if: always()
       with:
         name: playwright-report
         path: playwright-report/
-        retention-days: 30
+        retention-days: 7

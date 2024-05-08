@@ -4,16 +4,6 @@ const modeExt = process.env.TEST_MODE || 'development';
 dotenv.config({ path: '.env' });
 dotenv.config({ path: `.env.${modeExt}`, override: true });
 
-
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// require('dotenv').config();
-
-/**
- * See https://playwright.dev/docs/test-configuration.
- */
 export default defineConfig({
   testDir: './testCase',
   /* Run tests in files in parallel */
@@ -39,35 +29,21 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    // baseURL: 'http://127.0.0.1:3000',
-    // baseURL: 'https://staging-app.kawo.com/',
     baseURL: process.env.BASE_URL,
-    // storageState: '.auth/admin_user.json',
-
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'on-first-retry',
-    // extraHTTPHeaders: {
-    //   // We set this header per GitHub guidelines.
-    //   'Content-Type': 'application/json',
-    //   'Accept': '*/*',
-    //   // Add authorization token to all requests.
-    //   // Assuming personal access token available in the environment.
-    //   'Authorization': origins[0].localStorage[4].value,
-    // }
   },
 
   /* Configure projects for major browsers */
   projects: [
     // Setup project
     { name: 'setup', testMatch: /.*\.setup\.ts/ },
-    // { name: 'setup', testMatch: /.*\**\.ts/ },
+    // { name: 'setup', testMatch: /.*\**\.ts/ },//for debug
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'],
-            // Use prepared auth state.
-            // storageState: '.auth/user.json',
      },
       dependencies: ['setup'],
     },
