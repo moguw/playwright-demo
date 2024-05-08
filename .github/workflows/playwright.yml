@@ -98,6 +98,8 @@ jobs:
               }]
             } 
       env:
+        FAILURES: ${{ env.FAILURES }}
+        PASSED: ${{ env.PASSED }}
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} 
     - uses: actions/upload-artifact@v4
       if: always()
