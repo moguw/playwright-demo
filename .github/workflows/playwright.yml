@@ -72,12 +72,7 @@ jobs:
                   short: true
                 },
                 {
-                  title: '✨Repo:',
-                  value: `${process.env.AS_REPO}`,
-                  short: true
-                },
-                {
-                  title: '🎥Execution Time:',
+                  title: '⏰Execution Time:',
                   value: `${process.env.AS_TOOK}`,
                   short: true
                 },
@@ -87,20 +82,27 @@ jobs:
                   short: true
                 },
                 {
-                  title: '✅Total Tests:',
+                  title: '⛳️Total Tests:', 
                   value: (`${{ env.FAILURES }}`.match(/.spec.ts/g) || []).length + (`${{ env.PASSED }}`.match(/.spec.ts/g) || []).length,
                   short: true
                 },
                 {
-                  title: '🔥FLAKEY:',
-                  value: `${{ env.FLAKEY }}` === '' ? 'No FLAKEY' : `${{ env.FLAKEY }}`.match(/.spec.ts/g).length > 20 ? `Too many FLAKEY to print. Please go to GitHub to see full list of FLAKEY` : '```${{ env.FLAKEY }}```'.replace(/ /g, '\n'),
-                  short: false
+                  title: '✅Passed|❌failed|🔥flaky| Tests:',
+                  value: (`${{ env.PASSED }}`.match(/.spec.ts/g) || []).length | (`${{ env.FAILURES }}`.match(/.spec.ts/g) || []).length | (`${{ env.FLAKEY }}`.match(/.spec.ts/g) || []).length,
+                  short: true
                 },
                 {
-                  title: '❌Failures:',
-                  value: `${{ env.FAILURES }}` === '' ? 'No failures' : `${{ env.FAILURES }}`.match(/.spec.ts/g).length > 10 ? `Too many failures to print. Please go to GitHub to see full list of failures` : '```${{ env.FAILURES }}```'.replace(/ /g, '\n'),
+                  title: '✨Repo:',
+                  value: `${process.env.AS_REPO}`,
                   short: false
+                },
+                actions: [{
+                    name: "report",
+                    text: "View Report",
+                    type: "button",
+                    value: `https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}`
                 }]
+                ]
               }]
             } 
       env:
