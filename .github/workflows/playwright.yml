@@ -52,6 +52,12 @@ jobs:
     - name: Send Slack Notification
       if: always()
       uses: 8398a7/action-slack@v3
+      env:
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
+        FAILURES: ${{ env.FAILURES }}
+        PASSED: ${{ env.PASSED }}
+        FLAKEY: ${{ env.FLAKEY }}
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       with:
         job_name: Run end-to-end tests
         status: custom
@@ -88,7 +94,7 @@ jobs:
                 },
                 {
                   title: '✅Passed|❌failed|🔥flaky| Tests:',
-                  value: (`${{ env.PASSED }}`.match(/.spec.ts/g) || []).length | (`${{ env.FAILURES }}`.match(/.spec.ts/g) || []).length | (`${{ env.FLAKEY }}`.match(/.spec.ts/g) || []).length,
+                  value: (`${{ env.PASSED }}`.match(/.spec.ts/g) || []).length ; (`${{ env.FAILURES }}`.match(/.spec.ts/g) || []).length ; (`${{ env.FLAKEY }}`.match(/.spec.ts/g) || []).length,
                   short: true
                 },
                 {
@@ -104,13 +110,7 @@ jobs:
                 }]
                 ]
               }]
-            } 
-      env:
-        GITHUB_TOKEN: ${{ secrets.TOKEN }}
-        FAILURES: ${{ env.FAILURES }}
-        PASSED: ${{ env.PASSED }}
-        FLAKEY: ${{ env.FLAKEY }}
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} 
+            }     
     - uses: actions/upload-artifact@v4
       if: always()
       with:
