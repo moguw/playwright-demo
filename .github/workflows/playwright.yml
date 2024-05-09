@@ -47,8 +47,6 @@ jobs:
         echo "PASSED=$PASSED" >> $GITHUB_ENV 
         FLAKEY=$(cat ./summary.json | jq -r '.flakey[]' | tr '\n' ' ')
         echo "FLAKEY=$FLAKEY" >> $GITHUB_ENV 
-        TIMEOUT=$(cat ./summary.json | jq -r '.timedOut[]' | tr '\n' ' ' | sed 's/ /--->TIMEOUT /g')
-        echo "TIMEOUT=$TIMEOUT" >> $GITHUB_ENV
         FAILURES=$(cat ./summary.json | jq -r '.failed[]' | tr '\n' ' ')
         echo "FAILURES=$FAILURES" >> $GITHUB_ENV
     - name: Send Slack Notification
@@ -99,11 +97,6 @@ jobs:
                   short: false
                 },
                 {
-                  title: '😭TIMEOUT:',
-                  value: `${{ env.TIMEOUT }}` === '' ? 'No TIMEOUT' : `${{ env.TIMEOUT }}`.match(/.spec.ts/g).length > 20 ? `Too many TIMEOUT to print. Please go to GitHub to see full list of TIMEOUT` : '```${{ env.FLAKEY }}```'.replace(/ /g, '\n'),
-                  short: false
-                },
-                {
                   title: '❌Failures:',
                   value: `${{ env.FAILURES }}` === '' ? 'No failures' : `${{ env.FAILURES }}`.match(/.spec.ts/g).length > 10 ? `Too many failures to print. Please go to GitHub to see full list of failures` : '```${{ env.FAILURES }}```'.replace(/ /g, '\n'),
                   short: false
@@ -114,7 +107,6 @@ jobs:
         FAILURES: ${{ env.FAILURES }}
         PASSED: ${{ env.PASSED }}
         FLAKEY: ${{ env.FLAKEY }}
-        TIMEOUT: ${{ env.TIMEOUT }}
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} 
     - uses: actions/upload-artifact@v4
       if: always()
