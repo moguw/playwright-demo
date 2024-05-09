@@ -12,8 +12,6 @@ on:
         - staging-delta
         - staging-gamma
         - staging-beta
-env: 
-  GITHUB_TOKEN: ${{ secrets.TOKEN }}
 jobs:
   test:
     name: Run end-to-end tests
