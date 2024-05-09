@@ -60,7 +60,7 @@ jobs:
             {
               attachments: [{
                 color: '${{ job.status && needs.*.Results  }}' === 'success' ? 'good' : 'danger',
-                title: `🎭Playwright UI Automation Test Results :test_tube:`,
+                title: `Playwright UI Automation Test Results 🎭`,
                 fields: [{
                   title: '📦Environment:',
                   value: '${{ inputs.environment }}',
