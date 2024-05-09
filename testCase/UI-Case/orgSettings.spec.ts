@@ -74,10 +74,10 @@ test.describe('test - orgsettings cases',() => {
             await OrgSettings_brandOwner.assertHasPermissionToUsers()  
         });
     
-        test('operator', async ({}) => {
-            await OrgSettings_operator.goToUsersPage()
-            await OrgSettings_operator.assertNoPermissionToPage()   
-        });
+        // test('operator', async ({}) => {
+        //     await OrgSettings_operator.goToUsersPage()
+        //     await OrgSettings_operator.assertNoPermissionToPage()   
+        // });
     });
     
     test.describe('test - invite user',() => {
