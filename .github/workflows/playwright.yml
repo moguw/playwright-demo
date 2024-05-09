@@ -57,6 +57,7 @@ jobs:
         PASSED: ${{ env.PASSED }}
         FLAKEY: ${{ env.FLAKEY }}
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         job_name: Run end-to-end tests
         status: custom
