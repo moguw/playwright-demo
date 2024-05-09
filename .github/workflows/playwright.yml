@@ -88,13 +88,8 @@ jobs:
                   short: true
                 },
                 {
-                  title: '⛳️Total Tests:', 
+                  title: 'Total Tests:', 
                   value: (`${{ env.FAILURES }}`.match(/.spec.ts/g) || []).length + (`${{ env.PASSED }}`.match(/.spec.ts/g) || []).length,
-                  short: true
-                },
-                {
-                  title: '✅Passed|❌failed|🔥flaky| Tests:',
-                  value: (`${{ env.PASSED }}`.match(/.spec.ts/g) || []).length,
                   short: true
                 },
                 {
