@@ -91,13 +91,16 @@ jobs:
                   title: 'Total Tests:', 
                   value: (`${{ env.FAILURES }}`.match(/.spec.ts/g) || []).length + (`${{ env.PASSED }}`.match(/.spec.ts/g) || []).length,
                   short: true
-                }
-                ],
-                actions: [{
-                    name: "report",
-                    text: "View Report",
-                    type: "button",
-                    value: `https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}`
+                },
+                {
+                  title: '✅Passed| ❌failed| 🔥flaky| Tests:',
+                  value: [{'Passed': (`${{ env.PASSED }}`.match(/.spec.ts/g) || []).length}, {'failed': (`${{ env.FAILURES }}`.match(/.spec.ts/g) || []).length}, {'flakey': (`${{ env.FLAKEY }}`.match(/.spec.ts/g) || []).length}],
+                  short: true
+                },
+                {
+                  title: 'View Report:', 
+                  value: `https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}`
+                  short: false
                 }]
               }]
             }     
