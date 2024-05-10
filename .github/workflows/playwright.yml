@@ -99,7 +99,7 @@ jobs:
                 },
                 {
                   title: '✅Passed|❌failed|🔥flaky| Tests:',
-                  value: (`${{ env.PASSED }}`.match(/.spec.ts/g) || []).length  (`${{ env.FAILURES }}`.match(/.spec.ts/g) || []).length  (`${{ env.FLAKEY }}`.match(/.spec.ts/g) || []).length,
+                  value: [(`${{ env.PASSED }}`.match(/.spec.ts/g) || []).length, (`${{ env.FAILURES }}`.match(/.spec.ts/g) || []).length, (`${{ env.FLAKEY }}`.match(/.spec.ts/g) || []).length],
                   short: true
                 }
                 ]
