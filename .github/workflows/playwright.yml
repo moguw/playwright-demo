@@ -99,7 +99,7 @@ jobs:
                 },
                 {
                   title: 'View Report:', 
-                  value: `https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}`
+                  value: `https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}`,
                   short: false
                 }]
               }]
