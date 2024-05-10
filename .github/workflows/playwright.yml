@@ -93,16 +93,16 @@ jobs:
                   short: true
                 },
                 {
-                  title: '✨Repo:',
-                  value: `${process.env.AS_REPO}`,
-                  short: false
-                },
-                {
-                  title: '✅Passed|❌failed|🔥flaky| Tests:',
-                  value: [(`${{ env.PASSED }}`.match(/.spec.ts/g) || []).length, (`${{ env.FAILURES }}`.match(/.spec.ts/g) || []).length, (`${{ env.FLAKEY }}`.match(/.spec.ts/g) || []).length],
+                  title: '✅Passed| ❌failed| 🔥flaky| Tests:',
+                  value: `(`${{ env.PASSED }}`.match(/.spec.ts/g) || []).length (`${{ env.FAILURES }}`.match(/.spec.ts/g) || []).length (`${{ env.FLAKEY }}`.match(/.spec.ts/g) || []).length`,
                   short: true
-                }
-                ]
+                }],
+                actions: [{
+                    name: "report",
+                    text: "View Report",
+                    type: "button",
+                    value: `https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}`
+                }]
               }]
             }     
     - uses: actions/upload-artifact@v4
