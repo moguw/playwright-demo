@@ -89,22 +89,22 @@ jobs:
                 },
                 {
                   title: 'Total Tests:', 
-                  value: (`${{ env.FAILURES }}`.match(/.spec.ts/g) || []).length + (`${{ env.PASSED }}`.match(/.spec.ts/g) || []).length + (`${{ env.FLAKEY }}`.match(/.spec.ts/g) || []).length,
+                  value: (`${{ env.FAILURES }}` || []).length + (`${{ env.PASSED }}` || []).length,
                   short: true
                 },
                 {
                   title: '✅Passed:',
-                  value: [(`${{ env.PASSED }}`.match(/.spec.ts/g) || []).length,(`${{ env.FAILURES }}`.match(/.spec.ts/g) || []).length,(`${{ env.FLAKEY }}`.match(/.spec.ts/g) || []).length],
+                  value: (`${{ env.PASSED }}` || []).length,
                   short: true
                 },
                 {
                   title: '❌failed:',
-                  value: (`${{ env.FAILURES }}`.match(/.spec.ts/g) || []).length,
+                  value: (`${{ env.FAILURES }}` || []).length,
                   short: true
                 },
                 {
                   title: '🔥flaky:',
-                  value: (`${{ env.FLAKEY }}`.match(/.spec.ts/g) || []).length,
+                  value: (`${{ env.FLAKEY }}` || []).length,
                   short: true
                 },
                 {
