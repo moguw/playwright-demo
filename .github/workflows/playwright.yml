@@ -93,8 +93,8 @@ jobs:
                   short: true
                 },
                 {
-                  title: '✅Passed| ❌failed| 🔥flaky| Tests:',
-                  value: {'Passed': (`${{ env.PASSED }}`.match(/.spec.ts/g) || []).length}, {'failed': (`${{ env.FAILURES }}`.match(/.spec.ts/g) || []).length}, {'flakey': (`${{ env.FLAKEY }}`.match(/.spec.ts/g) || []).length},
+                  title: '✅Passed: (`${{ env.PASSED }}`.match(/.spec.ts/g) || []).length|  ❌failed: (`${{ env.FAILURES }}`.match(/.spec.ts/g) || []).length',
+                  value: [],
                   short: true
                 },
                 {
