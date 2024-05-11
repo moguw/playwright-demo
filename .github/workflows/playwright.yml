@@ -93,8 +93,18 @@ jobs:
                   short: true
                 },
                 {
-                  title: '✅Passed: (`${{ env.PASSED }}`.match(/.spec.ts/g) || []).length|  ❌failed: (`${{ env.FAILURES }}`.match(/.spec.ts/g) || []).length',
-                  value: [],
+                  title: '✅Passed:',
+                  value: [(`${{ env.PASSED }}`.match(/.spec.ts/g) || []).length,(`${{ env.FAILURES }}`.match(/.spec.ts/g) || []).length,(`${{ env.FLAKEY }}`.match(/.spec.ts/g) || []).length],
+                  short: true
+                },
+                {
+                  title: '❌failed:',
+                  value: (`${{ env.FAILURES }}`.match(/.spec.ts/g) || []).length,
+                  short: true
+                },
+                {
+                  title: '🔥flaky:',
+                  value: (`${{ env.FLAKEY }}`.match(/.spec.ts/g) || []).length,
                   short: true
                 },
                 {
