@@ -65,7 +65,7 @@ jobs:
         custom_payload: |
             {
               attachments: [{
-                color: '${{ job.status && needs.*.Results  }}' === 'success' ? 'good' : 'danger',
+                color: '${{ job.status }}' === 'success' ? 'good' : 'danger',
                 title: `Playwright UI Automation Test Results 🎭`,
                 fields: [{
                   title: '📦Environment:',
@@ -89,22 +89,22 @@ jobs:
                 },
                 {
                   title: 'Total Tests:', 
-                  value: (`${{ env.FAILURES }}` || []).length + (`${{ env.PASSED }}` || []).length,
+                  value: (`${{ env.FAILURES }}`.match(/.spec.ts/g) || []).length + (`${{ env.PASSED }}`.match(/.spec.ts/g) || []).length,
                   short: true
                 },
                 {
                   title: '✅Passed:',
-                  value: (`${{ env.PASSED }}` || []).length,
+                  value: (`${{ env.PASSED }}`.match(/.spec.ts/g) || []).length,
                   short: true
                 },
                 {
                   title: '❌failed:',
-                  value: (`${{ env.FAILURES }}` || []).length,
+                  value: (`${{ env.FAILURES }}`.match(/.spec.ts/g) || []).length,
                   short: true
                 },
                 {
-                  title: '🔥flaky:',
-                  value: (`${{ env.FLAKEY }}` || []).length,
+                  title: '🔥flakey:',
+                  value: (`${{ env.FLAKEY }}`.match(/.spec.ts/g) || []).length,
                   short: true
                 },
                 {
