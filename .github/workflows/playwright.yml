@@ -40,7 +40,7 @@ jobs:
             group_owner_pwd=${{ secrets.group_owner_pwd }} 
             brand_owner_pwd=${{ secrets.brand_owner_pwd }} 
             operator_pwd=${{ secrets.operator_pwd }} 
-            npx playwright test --reporter=line,allure-playwright
+            npx playwright test
     - name: Read Summary Report to Get Test Results
       if: always()
       run: |
@@ -121,7 +121,7 @@ jobs:
       if: always()
       with:
         name: Test-allure-report
-        path: allure-report
+        path: playwright-report/
         retention-days: 7
 
     - name: Get Allure history # Step to retrieve Allure history
