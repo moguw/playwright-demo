@@ -112,7 +112,7 @@ jobs:
                 },
                 {
                   title: 'View Allure Report:', 
-                  value: `https://mailmangroup.github.io/playwright-testing-kawo-project/${{ github.run_id }}/index.html`,
+                  value: `https://mailmangroup.github.io/playwright-testing-kawo-project/${{ github.run_number }}/index.html`,
                   short: false
                 }]
               }]
