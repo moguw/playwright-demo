@@ -25,6 +25,8 @@ jobs:
         cache: 'npm'
     - name: Install dependencies
       run: npm ci
+    - name: Install allure report
+      run: npm i -D @playwright/test allure-playwright
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Install dotenv 
@@ -32,7 +34,8 @@ jobs:
     - name: Install report 
       run: npm install playwright-json-summary-reporter --save-dev
     - name: Run Playwright tests
-      run: test_env=${{ inputs.environment }} 
+      run: ALLURE_RESULTS_DIR=my-allure-results 
+            test_env=${{ inputs.environment }} 
             org_owner_pwd=${{ secrets.org_owner_pwd }} 
             group_owner_pwd=${{ secrets.group_owner_pwd }} 
             brand_owner_pwd=${{ secrets.brand_owner_pwd }} 
@@ -45,9 +48,9 @@ jobs:
         echo "STATUS=$STATUS" >> $GITHUB_ENV 
         PASSED=$(cat ./summary.json | jq -r '.passed[]' | tr '\n' ' ')
         echo "PASSED=$PASSED" >> $GITHUB_ENV 
-        FLAKEY=$(cat ./summary.json | jq -r '.flakey[]' | tr '\n' ' ')
-        echo "FLAKEY=$FLAKEY" >> $GITHUB_ENV 
+        TIMEOUT=$(cat ./summary.json | jq -r '.timedOut[]' | tr '\n' ' ' | sed 's/ /--->TIMEOUT /g') 
         FAILURES=$(cat ./summary.json | jq -r '.failed[]' | tr '\n' ' ')
+        FAILURES+=$TIMEOUT
         echo "FAILURES=$FAILURES" >> $GITHUB_ENV
     - name: Send Slack Notification
       if: always()
@@ -55,7 +58,6 @@ jobs:
       env:
         FAILURES: ${{ env.FAILURES }}
         PASSED: ${{ env.PASSED }}
-        FLAKEY: ${{ env.FLAKEY }}
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -93,23 +95,13 @@ jobs:
                   short: true
                 },
                 {
-                  title: '✅Passed:',
-                  value: (`${{ env.PASSED }}`.match(/.spec.ts/g) || []).length,
+                  title: '❌FAILURES:',
+                  value: `${{ env.FAILURES }}` === '' ? 'No failures' : `${{ env.FAILURES }}`.match(/.spec.ts/g).length > 20 ? `Too many failures to print. Please go to GitHub to see full list of failures` : '```${{ env.FAILURES }}```'.replace(/ /g, '\n'),
                   short: true
                 },
                 {
-                  title: '❌failed:',
-                  value: (`${{ env.FAILURES }}`.match(/.spec.ts/g) || []).length,
-                  short: true
-                },
-                {
-                  title: '🔥flakey:',
-                  value: (`${{ env.FLAKEY }}`.match(/.spec.ts/g) || []).length,
-                  short: true
-                },
-                {
-                  title: 'View Report:', 
-                  value: `https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}`,
+                  title: 'View Allure Report:', 
+                  value: `https://mailmangroup.github.io/playwright-testing-kawo-project/${{ github.run_number }}/index.html`,
                   short: false
                 }]
               }]
@@ -120,3 +112,29 @@ jobs:
         name: playwright-report
         path: playwright-report/
         retention-days: 7
+
+    - name: Get Allure history # Step to retrieve Allure history
+      uses: actions/checkout@v4
+      if: always() # Execute even if previous steps fail
+      continue-on-error: true # Continue execution even if the step fails
+      with:
+        ref: allure_report # Specify the branch to retrieve Allure history from
+        path: allure_report # Set the destination path for Allure history
+
+    - name: Generate allure report action # Step to generate Allure report
+      uses: simple-elf/allure-report-action@master
+      if: always() # Execute even if previous steps fail
+      id: allure-report
+      with:
+        allure_results: my-allure-results # path to store the allure results
+        allure_history: allure-history # Specify the directory to store Allure history
+        allure_report: allure-report
+        keep_reports: 20 # Specify the number of previous reports to keep
+
+    - name: Deploy Allure report to GitHub Pages # Step to deploy Allure report to GitHub Pages
+      if: always() # Execute even if previous steps fail
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }} # Provide the GitHub token for authentication
+        publish_branch: allure_report # Specify the branch to publish the report to
+        publish_dir: allure-history # Specify the directory containing the report

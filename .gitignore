@@ -6,3 +6,5 @@ node_modules/
 /.auth
 /summary.json
 /envfile/.env.local
+/my-allure-results
+/allure-report
