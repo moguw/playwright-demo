@@ -119,7 +119,7 @@ jobs:
       continue-on-error: true # Continue execution even if the step fails
       with:
         ref: allure_report # Specify the branch to retrieve Allure history from
-        path: allure_report # Set the destination path for Allure history
+        path: allure-history # Set the destination path for Allure history
 
     - name: Generate allure report action # Step to generate Allure report
       uses: simple-elf/allure-report-action@master
