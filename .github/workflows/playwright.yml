@@ -34,12 +34,13 @@ jobs:
     - name: Install report 
       run: npm install playwright-json-summary-reporter --save-dev
     - name: Run Playwright tests
-      run: test_env=${{ inputs.environment }} 
+      run: ALLURE_RESULTS_DIR=my-allure-results 
+            test_env=${{ inputs.environment }} 
             org_owner_pwd=${{ secrets.org_owner_pwd }} 
             group_owner_pwd=${{ secrets.group_owner_pwd }} 
             brand_owner_pwd=${{ secrets.brand_owner_pwd }} 
             operator_pwd=${{ secrets.operator_pwd }} 
-            npx playwright test
+            npx playwright test --reporter=line,allure-playwright
     - name: Read Summary Report to Get Test Results
       if: always()
       run: |
