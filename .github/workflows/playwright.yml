@@ -48,9 +48,9 @@ jobs:
         echo "STATUS=$STATUS" >> $GITHUB_ENV 
         PASSED=$(cat ./summary.json | jq -r '.passed[]' | tr '\n' ' ')
         echo "PASSED=$PASSED" >> $GITHUB_ENV 
-        FLAKEY=$(cat ./summary.json | jq -r '.flakey[]' | tr '\n' ' ')
-        echo "FLAKEY=$FLAKEY" >> $GITHUB_ENV 
+        TIMEOUT=$(cat ./summary.json | jq -r '.timedOut[]' | tr '\n' ' ' | sed 's/ /--->TIMEOUT /g') 
         FAILURES=$(cat ./summary.json | jq -r '.failed[]' | tr '\n' ' ')
+        FAILURES+=$TIMEOUT
         echo "FAILURES=$FAILURES" >> $GITHUB_ENV
     - name: Send Slack Notification
       if: always()
@@ -58,7 +58,6 @@ jobs:
       env:
         FAILURES: ${{ env.FAILURES }}
         PASSED: ${{ env.PASSED }}
-        FLAKEY: ${{ env.FLAKEY }}
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -96,18 +95,8 @@ jobs:
                   short: true
                 },
                 {
-                  title: '✅Passed:',
-                  value: (`${{ env.PASSED }}`.match(/.spec.ts/g) || []).length,
-                  short: true
-                },
-                {
-                  title: '❌failed:',
-                  value: (`${{ env.FAILURES }}`.match(/.spec.ts/g) || []).length,
-                  short: true
-                },
-                {
-                  title: '🔥flakey:',
-                  value: (`${{ env.FLAKEY }}`.match(/.spec.ts/g) || []).length,
+                  title: '❌FAILURES:',
+                  value: `${{ env.FAILURES }}` === '' ? 'No failures' : `${{ env.FAILURES }}`.match(/.spec.ts/g).length > 20 ? `Too many failures to print. Please go to GitHub to see full list of failures` : '```${{ env.FAILURES }}```'.replace(/ /g, '\n'),
                   short: true
                 },
                 {
@@ -120,7 +109,7 @@ jobs:
     - uses: actions/upload-artifact@v4
       if: always()
       with:
-        name: Test-allure-report
+        name: playwright-report
         path: playwright-report/
         retention-days: 7
 
