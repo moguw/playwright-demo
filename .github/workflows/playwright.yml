@@ -111,8 +111,8 @@ jobs:
                   short: true
                 },
                 {
-                  title: 'View Report:', 
-                  value: `https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}`,
+                  title: 'View Allure Report:', 
+                  value: `https://mailmangroup.github.io/playwright-testing-kawo-project/${{ github.run_id }}/index.html`,
                   short: false
                 }]
               }]
@@ -121,7 +121,7 @@ jobs:
       if: always()
       with:
         name: Test-allure-report
-        path: allure-report/
+        path: allure-report
         retention-days: 7
 
     - name: Get Allure history # Step to retrieve Allure history
