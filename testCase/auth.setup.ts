@@ -7,6 +7,9 @@ const loginButton_elelment = "text=Log in"
 
 /** save org owner authentication */
 setup('authenticate as org owner', async ({ page }) => {
+  if (await page.isVisible('text=邮箱登录')) {
+		await page.getByRole('radio', { name: 'ENG' }).click();
+	}
   await page.goto('/login');
   await page.fill(name_element,process.env.org_owner_name || '');
   await page.fill(pwd_element, process.env.org_owner_pwd || '');
@@ -25,6 +28,9 @@ setup('authenticate as org owner', async ({ page }) => {
 
 /** save group_owner authentication */
 setup('authenticate as group_owner', async ({ page }) => {
+  if (await page.isVisible('text=邮箱登录')) {
+		await page.getByRole('radio', { name: 'ENG' }).click();
+	}
   await page.goto('/login');
   await page.fill(name_element,process.env.group_owner_name || '');
   await page.fill(pwd_element, process.env.group_owner_pwd || '');
@@ -43,6 +49,9 @@ setup('authenticate as group_owner', async ({ page }) => {
 
 /** save brand_owner authentication */
 setup('authenticate as brand_owner', async ({ page }) => {
+  if (await page.isVisible('text=邮箱登录')) {
+		await page.getByRole('radio', { name: 'ENG' }).click();
+	}
   await page.goto('/login');
   await page.fill(name_element,process.env.brand_owner_name || '');
   await page.fill(pwd_element, process.env.brand_owner_pwd || '');
@@ -59,6 +68,9 @@ setup('authenticate as brand_owner', async ({ page }) => {
 
 /** save operator authentication */
 setup('authenticate as operator', async ({ page }) => {
+  if (await page.isVisible('text=邮箱登录')) {
+		await page.getByRole('radio', { name: 'ENG' }).click();
+	}
   await page.goto('/login');
   await page.fill(name_element,process.env.operator_name || '');
   await page.fill(pwd_element, process.env.operator_pwd || '');
