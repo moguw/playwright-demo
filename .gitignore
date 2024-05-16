@@ -8,3 +8,4 @@ node_modules/
 /envfile/.env.local
 /my-allure-results
 /allure-report
+/allure-results

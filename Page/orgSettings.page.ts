@@ -10,7 +10,7 @@
 */
 
 import { Page,expect } from '@playwright/test';
-
+import {set_global_data,get_global_data } from '../utils/cache-setup'
 const RemindNoPermission_element = 'h2.kui-typ.kui-typ__h2'
 const RemindNoPermission_text = "You don't have permission to view this page"
 const General_title = /.*General/
@@ -115,7 +115,7 @@ export class OrgSettings {
                 await this.page.getByRole('listitem').getByRole('option',{name: Groups_selection}).first().click()
                 await this.page.getByRole('button', {name: Save_btn}).last().dblclick({force: true})
                 await this.page.getByRole('button',{name: Save_btn}).last().click()
-                return emailAddress_info
+                set_global_data('emailAddress_info_org',emailAddress_info)
                 break
             }
             else {
@@ -124,13 +124,14 @@ export class OrgSettings {
         }
     }
 
-    async assertEditFromOrgToGroupSuccess(EmailAddress,Groups_selection) {
-        const emailAddress_info = await this.editUserFromOrgToGroup(EmailAddress,Groups_selection)
-        if (emailAddress_info){
+    async assertEditFromOrgToGroupSuccess() {
+        // const emailAddress_info = await this.editUserFromOrgToGroup(EmailAddress,Groups_selection)
+        if (get_global_data('emailAddress_info_org')){
+            console.log('bbbbb',get_global_data('emailAddress_info'))
             await this.page.getByRole('button',{name: Role_orgOwner}).first().click()
             await this.page.getByRole('listitem').getByRole('option',{name: Role_orgOwner}).first().click()
             await this.page.getByRole('listitem').getByRole('option',{name: Role_groupOwner}).first().click()
-            await this.page.getByPlaceholder(SearchNameOrEmail_placeholder).fill(emailAddress_info)
+            await this.page.getByPlaceholder(SearchNameOrEmail_placeholder).fill(get_global_data('emailAddress_info_org'))
             await expect(this.page.locator(Roles_info_ele)).toHaveText(Role_groupOwner)  
         }
         else{
@@ -156,7 +157,7 @@ export class OrgSettings {
                 await this.page.getByRole('listitem').getByRole('option',{name: Brands_selection}).first().click()
                 await this.page.getByRole('button', {name: Save_btn}).last().click()
                 await this.page.getByRole('button',{name: Save_btn}).last().click()
-                return emailAddress_info
+                set_global_data('emailAddress_info_group',emailAddress_info)
                 break
             }
             else {
@@ -165,13 +166,12 @@ export class OrgSettings {
         }
     }
 
-    async assertEditFromGroupToBrandSuccess(EmailAddress,Groups_selection,Brands_selection) {
-        const emailAddress_info = await this.editUserFromGroupToBrand(EmailAddress,Groups_selection,Brands_selection)
-        if (emailAddress_info){
+    async assertEditFromGroupToBrandSuccess() {
+        if (get_global_data('emailAddress_info_group')){
             await this.page.getByRole('button',{name: Role_groupOwner}).first().click()
             await this.page.getByRole('listitem').getByRole('option',{name: Role_groupOwner}).first().click()
             await this.page.getByRole('listitem').getByRole('option',{name: Role_brandOwner}).first().click()
-            await this.page.getByPlaceholder(SearchNameOrEmail_placeholder).fill(emailAddress_info)
+            await this.page.getByPlaceholder(SearchNameOrEmail_placeholder).fill(get_global_data('emailAddress_info_group'))
             await expect(this.page.locator(Roles_info_ele)).toHaveText(Role_brandOwner)
         }
         else{
@@ -195,7 +195,7 @@ export class OrgSettings {
                 await this.page.getByRole('listitem').getByRole('option',{name: Role_operator}).first().click()
                 await this.page.getByRole('button', {name: Save_btn}).last().click()
                 await this.page.getByRole('button',{name: Save_btn}).last().click()
-                return emailAddress_info
+                set_global_data('emailAddress_info_brand',emailAddress_info)
                 break
             }
             else {
@@ -204,14 +204,12 @@ export class OrgSettings {
         }    
     }
 
-    async assertEditFromBrandToOperatorSuccess(EmailAddress) {
-        const emailAddress_info = await this.editUserFromBrandToOperator(EmailAddress)
-
-        if (emailAddress_info){
+    async assertEditFromBrandToOperatorSuccess() {
+        if (get_global_data('emailAddress_info_brand')){
             await this.page.getByRole('button',{name: Role_brandOwner}).first().click()
             await this.page.getByRole('listitem').getByRole('option',{name: Role_brandOwner}).first().click()
             await this.page.getByRole('listitem').getByRole('option',{name: Role_operator}).first().click()
-            await this.page.getByPlaceholder(SearchNameOrEmail_placeholder).fill(emailAddress_info)
+            await this.page.getByPlaceholder(SearchNameOrEmail_placeholder).fill(get_global_data('emailAddress_info_brand'))
             await expect(this.page.locator(Roles_info_ele)).toHaveText(Role_operator)
         }
         else{

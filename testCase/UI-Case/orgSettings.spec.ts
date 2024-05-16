@@ -106,17 +106,20 @@ test.describe('test - orgsettings cases',() => {
     test.describe('test - edit user',() => {
         test('org owner', async ({}) => {
             await OrgSettings_orgOwner.goToUsersPage()
-            await OrgSettings_orgOwner.assertEditFromOrgToGroupSuccess(Search_auto,Groups_selection)
+            await OrgSettings_orgOwner.editUserFromOrgToGroup(Search_auto,Groups_selection)
+            await OrgSettings_orgOwner.assertEditFromOrgToGroupSuccess()
         });
     
         test('group owner', async ({}) => {
             await OrgSettings_groupOwner.goToUsersPage()
-            await OrgSettings_groupOwner.assertEditFromGroupToBrandSuccess(Search_auto,Groups_selection,Brands_selection)
+            await OrgSettings_groupOwner.editUserFromGroupToBrand(Search_auto,Groups_selection,Brands_selection)
+            await OrgSettings_groupOwner.assertEditFromGroupToBrandSuccess()
         });
     
         test('brand owner', async ({}) => {
             await OrgSettings_brandOwner.goToUsersPage()
-            await OrgSettings_brandOwner.assertEditFromBrandToOperatorSuccess(Search_auto)
+            await OrgSettings_brandOwner.editUserFromBrandToOperator(Search_auto)
+            await OrgSettings_brandOwner.assertEditFromBrandToOperatorSuccess()
         });
     });
     
