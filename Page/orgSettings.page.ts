@@ -230,21 +230,20 @@ export class OrgSettings {
                 const emailAddress_info = await this.page.locator(EmailAddress_info__ele).nth(i).innerText()
                 await this.page.locator(DeleteUser_btn_ele).nth(i).dblclick({force: true})
                 await this.page.locator(ConfirmRemove_btn_ele, {hasText: ConfirmRemove_btn}).first().click()
-                return emailAddress_info
+                set_global_data('deleteUser_email',emailAddress_info)
                 break 
             }
             else {
-                console.log(i,'skip...')
+                console.log('deleteUser skip...')
             }
         }
     }
 
-    async assertDeleteUserSuccess(EmailAddress,Role) {
-        const emailAddress_info = await this.deleteUser(EmailAddress,Role)
-        if (emailAddress_info){
+    async assertDeleteUserSuccess(Role) {
+        if (get_global_data('deleteUser_email')){
             await this.page.getByRole('button',{name: Role}).first().click()
             await this.page.locator('button.kui-button-base.kui-lst-item__btn',{hasText: Role}).first().click()
-            await this.page.getByPlaceholder(SearchNameOrEmail_placeholder).fill(emailAddress_info)
+            await this.page.getByPlaceholder(SearchNameOrEmail_placeholder).fill(get_global_data('deleteUser_email'))
             await expect(this.page.locator(FilteredResult_ele)).toContainText(FilteredResult)
         }
         else{

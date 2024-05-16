@@ -126,17 +126,20 @@ test.describe('test - orgsettings cases',() => {
     test.describe('test - delete user',() => {
         test('org owner', async ({}) => {
             await OrgSettings_orgOwner.goToUsersPage()
-            await OrgSettings_orgOwner.assertDeleteUserSuccess(Search_auto,Role_orgOwner)
+            await OrgSettings_orgOwner.deleteUser(Search_auto,Role_orgOwner)
+            await OrgSettings_orgOwner.assertDeleteUserSuccess(Role_orgOwner)
         });
     
         test('group owner', async ({}) => {
             await OrgSettings_groupOwner.goToUsersPage()
-            await OrgSettings_groupOwner.assertDeleteUserSuccess(Search_auto,Role_groupOwner)
+            await OrgSettings_groupOwner.deleteUser(Search_auto,Role_groupOwner)
+            await OrgSettings_groupOwner.assertDeleteUserSuccess(Role_groupOwner)
         });
     
         test('brand owner', async ({}) => {
             await OrgSettings_brandOwner.goToUsersPage()
-            await OrgSettings_brandOwner.assertDeleteUserSuccess(Search_auto,Role_brandOwner)
+            await OrgSettings_brandOwner.deleteUser(Search_auto,Role_brandOwner)
+            await OrgSettings_brandOwner.assertDeleteUserSuccess(Role_brandOwner)
         });
     });
     
