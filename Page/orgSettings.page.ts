@@ -53,7 +53,7 @@ export class OrgSettings {
 
     // general menu
     async goToGeneralPage() {
-        await this.page.goto('/automation-test/settings/general')
+        await this.page.goto('settings/general')
     } 
     async assertHasPermissionToGeneral() {
         await expect(this.page).toHaveTitle(General_title)
@@ -64,7 +64,7 @@ export class OrgSettings {
     
     // users tab
     async goToUsersPage() {
-        await this.page.goto('/automation-test/settings/users')
+        await this.page.goto('settings/users')
     }
     async assertHasPermissionToUsers() {
         await expect(this.page.getByRole('button', {name: Users_tab})).toBeVisible()
@@ -253,7 +253,7 @@ export class OrgSettings {
 
     // Competitors tab
     async goToCompetitorsPage() {
-        await this.page.goto('/automation-test/settings/competitors')
+        await this.page.goto('settings/competitors')
     }
     async assertHasPermissionToCompetitors() {
         await expect(this.page.getByRole('button', {name: Competitors_tab})).toBeVisible()
@@ -261,7 +261,7 @@ export class OrgSettings {
 
     // Billing tab
     async goToBillingPage() {
-        await this.page.goto('/automation-test/settings/billing')
+        await this.page.goto('settings/billing')
     }
     async assertHasPermissionToBilling() {
         await expect(this.page.getByRole('button', {name: Billing_tab})).toBeVisible()

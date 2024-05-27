@@ -24,7 +24,7 @@ export class User {
       this.page = page;
     }
     async goToBrandSettingPage() {
-        await this.page.goto('/automation-test/overview');
+        await this.page.goto('overview');
         await this.page.locator(brandSetting_element).last().click()
         await this.page.waitForSelector(Users_element)
         await this.page.locator(Users_element).first().click()

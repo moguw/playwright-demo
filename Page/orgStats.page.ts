@@ -19,7 +19,7 @@ export class OrgStats {
 
     // stats menu
     async goToStatsPage() {
-        await this.page.goto('/automation-test/overview/stats')
+        await this.page.goto('overview/stats')
     } 
     async assertHasPermissionToStats() {
         await expect(this.page.getByRole('button', {name: Overview_tab})).toBeVisible()

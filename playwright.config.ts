@@ -1,6 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 import dotenv from 'dotenv';
-const modeExt = process.env.TEST_MODE || 'development';
+const modeExt = process.env.TEST_MODE || 'local';
 dotenv.config({ path: '.env' });
 dotenv.config({ path: `.env.${modeExt}`, override: true });
 
@@ -13,7 +13,7 @@ export default defineConfig({
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 6 : undefined,
+  workers: process.env.CI ? 4 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     ['allure-playwright'],
@@ -41,7 +41,7 @@ export default defineConfig({
   projects: [
     // Setup project
     { name: 'setup', testMatch: /.*\.setup\.ts/ },
-    // { name: 'setup', testMatch: /.*\**\.ts/ },//for debug
+    //{ name: 'setup', testMatch: /.*\**\.ts/ },//for debug
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'],

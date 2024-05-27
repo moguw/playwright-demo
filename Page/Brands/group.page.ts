@@ -19,7 +19,7 @@ export class Groups {
       this.page = page;
     }
     async goToOverviewPage() {
-      await this.page.goto('/automation-test/overview');
+      await this.page.goto('overview');
     }
     async createGroup() {     
         await this.page.locator(createGroupButton_element).first().click();

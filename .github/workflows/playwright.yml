@@ -33,9 +33,19 @@ jobs:
       run: npm i -D dotenv
     - name: Install report 
       run: npm install playwright-json-summary-reporter --save-dev
-    - name: Run Playwright tests
+    - name: Run Playwright tests - workflow_dispatch
+      if: ${{ github.event_name == 'workflow_dispatch' }}
       run: ALLURE_RESULTS_DIR=my-allure-results 
             test_env=${{ inputs.environment }} 
+            org_owner_pwd=${{ secrets.org_owner_pwd }} 
+            group_owner_pwd=${{ secrets.group_owner_pwd }} 
+            brand_owner_pwd=${{ secrets.brand_owner_pwd }} 
+            operator_pwd=${{ secrets.operator_pwd }} 
+            npx playwright test 
+    - name: Run Playwright tests - push/pull_request
+      if: ${{ github.event_name == 'push' || github.event_name == 'pull_request' }}
+      run: ALLURE_RESULTS_DIR=my-allure-results 
+            test_env=${{ secrets.ENVIRONMENT }} 
             org_owner_pwd=${{ secrets.org_owner_pwd }} 
             group_owner_pwd=${{ secrets.group_owner_pwd }} 
             brand_owner_pwd=${{ secrets.brand_owner_pwd }} 
@@ -99,37 +109,37 @@ jobs:
                 color: '${{ job.status }}' === 'success' ? 'good' : 'danger',
                 title: `Playwright UI Automation Test Results 🎭`,
                 fields: [{
-                  title: '📦Environment:',
+                  title: '📦 Environment:',
                   value: '${{ inputs.environment }}',
                   short: true
                 },
                 {
-                  title: '🎨Triggered By:',
+                  title: '🎨 Triggered By:',
                   value: [{'origin': 'pull_request', 'new': 'Pull Request'}, {'origin': 'schedule', 'new': 'Schedule'}, {'origin': 'repository_dispatch', 'new': 'Deploy'}, {'origin': 'workflow_dispatch', 'new': 'GitHub Actions'}].find(item => item.origin === `${process.env.AS_EVENT_NAME}`).new || `${process.env.AS_EVENT_NAME}`,
                   short: true
                 },
                 {
-                  title: '⏰Execution Time:',
+                  title: '⏰ Execution Time:',
                   value: `${process.env.AS_TOOK}`,
                   short: true
                 },
                 {
-                  title: '🐛Workflow:',
+                  title: '🐛 Workflow:',
                   value: `${process.env.AS_WORKFLOW}`,
                   short: true
                 },
                 {
-                  title: '🌟Total Tests:', 
+                  title: '🌟 Total Tests:', 
                   value: (`${{ env.FAILURES }}`.match(/.spec.ts/g) || []).length + (`${{ env.PASSED }}`.match(/.spec.ts/g) || []).length,
                   short: true
                 },
                 {
-                  title: '❌FAILURES:',
+                  title: '❌ FAILURES:',
                   value: `${{ env.FAILURES }}` === '' ? 'No failures' : `${{ env.FAILURES }}`.match(/.spec.ts/g).length > 30 ? `Too many failures to print. Please go to GitHub to see full list of failures` : '```${{ env.FAILURES }}```'.replace(/ /g, '\n'),
                   short: true
                 },
                 {
-                  title: 'View Allure Report:', 
+                  title: '🍀 View Allure Report:', 
                   value: `https://mailmangroup.github.io/playwright-testing-kawo-project/${{ github.run_number }}/index.html`,
                   short: false
                 }]

@@ -35,7 +35,7 @@ export class BrandKPIs {
 
     // KPIs page
     async goToBrandKPIsPages() {
-      await this.page.goto('automation-test/364/reporting/kpis')
+      await this.page.goto('364/reporting/kpis')
     }
     async assertHasPermissionToBrandKPIs() {
       await expect(this.page.locator(BrandKPIs_TopBar_ele)).toContainText(BrandKPIs_TopBar)

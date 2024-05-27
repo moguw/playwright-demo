@@ -16,7 +16,7 @@ export class General {
       this.page = page;
     }
     async goToBrandSettingPage() {
-        await this.page.goto('/automation-test/overview/Brands');
+        await this.page.goto('overview/Brands');
         await this.page.locator(brandSetting_element).last().click()
         
     }

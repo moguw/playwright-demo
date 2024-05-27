@@ -29,7 +29,7 @@ export class Brands {
       this.page = page;
     }
     async goToBrandsPage() {
-        await this.page.goto('/automation-test/overview/Brands'); 
+        await this.page.goto('overview/Brands'); 
     }
     async createBrands(name,plan,industry,industry_sub) {
         await this.page.locator(CreateBrandButton_element).first().click()  
@@ -57,7 +57,7 @@ export class Brands {
         const brand_name_value = await this.page.locator(get_brand_name_element).innerText()
         if(brand_name_value === 'AUTO TEST BRAND(DONT DELETE)'){
           console.log('this is a auto test brand,please do not delete this brand,thanks')
-          await this.page.goto('/automation-test/overview/brands/group/archived')
+          await this.page.goto('overview/brands/group/archived')
         }
         else{
           await this.page.locator(brand_name_element).fill('')
