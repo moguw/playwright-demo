@@ -111,7 +111,7 @@ jobs:
             {
               attachments: [{
                 color: '${{ job.status }}' === 'success' ? 'good' : 'danger',
-                title: `🎭 Playwright UI Automation Test Results`,
+                title: `KAWO Project Playwright UI Automation Test Results 🎭`,
                 fields: [{
                   title: '📦 Environment:',
                   value: '${{ inputs.environment }}',
@@ -129,7 +129,7 @@ jobs:
                 },
                 {
                   title: '🌟 Total Case:', 
-                  value: (`${{ env.FAILURES }}`.match(/.spec.ts/g) || []).length + (`${{ env.PASSED }}`.match(/.spec.ts/g) || []).length - (`${{ env.FLAKEY }}`.match(/.spec.ts/g) || []).length,
+                  value: (`${{ env.FAILURES }}`.match(/.spec.ts/g) || []).length + (`${{ env.PASSED }}`.match(/.spec.ts/g) || []).length - (`${{ env.FLAKEY }}`.match(/.spec.ts/g) || []).length + (`${{ env.PASSED }}`.match(/.setup.ts/g) || []).length,
                   short: true
                 },
                 {
