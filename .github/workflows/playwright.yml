@@ -118,7 +118,7 @@ jobs:
                   short: true
                 },
                 {
-                  title: '🎨 Triggered By:',
+                  title: '🖥️ Triggered By:',
                   value: [{'origin': 'pull_request', 'new': 'Pull Request'}, {'origin': 'schedule', 'new': 'Schedule'}, {'origin': 'repository_dispatch', 'new': 'Deploy'}, {'origin': 'workflow_dispatch', 'new': 'GitHub Actions'}].find(item => item.origin === `${process.env.AS_EVENT_NAME}`).new || `${process.env.AS_EVENT_NAME}`,
                   short: true
                 },
@@ -138,7 +138,7 @@ jobs:
                   short: false
                 },
                 {
-                  title: '🍀 Allure Report:', 
+                  title: '📰 Allure Report:', 
                   value: `https://mailmangroup.github.io/playwright-testing-kawo-project/${{ github.run_number }}/index.html`,
                   short: false
                 },
@@ -148,6 +148,6 @@ jobs:
                   short: false
                 }],
                 "footer": "KAWO",
-                "footer_icon": "https://staging-img.kawo.com/36449907-5c53-4175-9ed8-403dab8c35ff_t.jpg"
+                "footer_icon": "https://img.kawo.com/05cac780-4eec-406a-b091-92fad995d8e0_m.png"
               }]
             }
