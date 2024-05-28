@@ -1,4 +1,4 @@
-name: Playwright UI Tests
+name: Playwright KAWO Project Tests
 on:
   workflow_dispatch:
     inputs:
@@ -108,7 +108,7 @@ jobs:
             {
               attachments: [{
                 color: '${{ job.status }}' === 'success' ? 'good' : 'danger',
-                title: `Playwright UI Automation Test Results 🎭`,
+                title: `🎭 Playwright UI Automation Test Results`,
                 fields: [{
                   title: '📦 Environment:',
                   value: '${{ inputs.environment }}',
@@ -125,24 +125,26 @@ jobs:
                   short: true
                 },
                 {
-                  title: '🐛 Workflow:',
-                  value: `${process.env.AS_WORKFLOW}`,
-                  short: true
-                },
-                {
-                  title: '🌟 Total Tests:', 
+                  title: '🌟 Total Case:', 
                   value: (`${{ env.FAILURES }}`.match(/.spec.ts/g) || []).length + (`${{ env.PASSED }}`.match(/.spec.ts/g) || []).length,
                   short: true
                 },
                 {
-                  title: '❌ FAILURES:',
-                  value: `${{ env.FAILURES }}` === '' ? 'No failures' : `${{ env.FAILURES }}`.match(/.spec.ts/g).length > 30 ? `Too many failures to print. Please go to GitHub to see full list of failures` : '```${{ env.FAILURES }}```'.replace(/ /g, '\n'),
-                  short: true
+                  title: '🐛 Workflow:',
+                  value: `${process.env.AS_WORKFLOW}`,
+                  short: false
                 },
                 {
-                  title: '🍀 View Allure Report:', 
+                  title: '🍀 Allure Report:', 
                   value: `https://mailmangroup.github.io/playwright-testing-kawo-project/${{ github.run_number }}/index.html`,
                   short: false
-                }]
+                },
+                {
+                  title: '❌ FAILURES:',
+                  value: `${{ env.FAILURES }}` === '' ? 'No failures' : `${{ env.FAILURES }}`.match(/.spec.ts/g).length > 30 ? `Too many failures to print. Please go to GitHub to see full list of failures` : '```${{ env.FAILURES }}```'.replace(/ /g, '\n'),
+                  short: false
+                }],
+                "footer": "KAWO",
+                "footer_icon": "https://staging-img.kawo.com/36449907-5c53-4175-9ed8-403dab8c35ff_t.jpg"
               }]
             }
