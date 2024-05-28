@@ -147,6 +147,18 @@ jobs:
                   value: `${{ env.FAILURES }}` === '' ? 'No failures' : `${{ env.FAILURES }}`.match(/.spec.ts/g).length > 30 ? `Too many failures to print. Please go to GitHub to see full list of failures` : '```${{ env.FAILURES }}```'.replace(/ /g, '\n'),
                   short: false
                 }],
+                actions: [{
+                  name: 'report',
+                  text: '📰 Allure Report',
+                  type: 'button',
+                  value: `https://mailmangroup.github.io/playwright-testing-kawo-project/${{ github.run_number }}/index.html`
+                },
+                {
+                  name: 'Workflow:',
+                  text: '🐛 Workflow',
+                  type: 'button',
+                  value: `${process.env.AS_WORKFLOW}`
+                }],
                 "footer": "KAWO",
                 "footer_icon": "https://img.kawo.com/05cac780-4eec-406a-b091-92fad995d8e0_m.png"
               }]
