@@ -110,6 +110,8 @@ jobs:
         custom_payload: |
             {
               attachments: [{
+                fallback: "somethings wrong",
+                callback_id: "some_workflow",
                 color: '${{ job.status }}' === 'success' ? 'good' : 'danger',
                 title: `KAWO Project Playwright UI Automation Test Results 🎭`,
                 fields: [{
